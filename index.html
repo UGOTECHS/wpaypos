@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POS Integration API v1.3.19 — WPAY Payment Terminal</title>
+<title>POS Integration API v1.3.26 — WPAY Payment Terminal</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <style>
@@ -498,7 +498,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <span class="sh-subtitle">WPAY</span>
       </div>
     </div>
-    <span class="sh-firmware">QA_1.3.19</span>
+    <span class="sh-firmware">QA_1.3.26</span>
   </div>
 
   <div class="nav-group">
@@ -529,19 +529,12 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="nav-item sub" data-target="purchasecash"><span class="method-badge">PC</span>Purchase &amp; Cash</div>
     <div class="nav-item sub" data-target="motopurchase"><span class="method-badge">MP</span>MOTO Purchase</div>
     <div class="nav-item sub" data-target="motorefund"><span class="method-badge">MR</span>MOTO Refund</div>
+    <div class="nav-item sub" data-target="balanceenquiry"><span class="method-badge">BE</span>Balance Enquiry</div>
     <div class="nav-item sub" data-target="preauth-family"><span class="method-badge">—</span>Pre-auth Guide</div>
     <div class="nav-item sub" data-target="preauth"><span class="method-badge">PA</span>Pre-auth</div>
     <div class="nav-item sub" data-target="preauthcomplete"><span class="method-badge">AC</span>Pre-auth Complete</div>
-    <div class="nav-item sub" data-target="preauthcancel"><span class="method-badge">PAC</span>Cancel Pre-Auth</div>
-    <div class="nav-item sub" data-target="preauthtopup"><span class="method-badge">PT</span>Incremental Pre-Auth</div>
-    <div class="nav-item sub" data-target="preauthpartial"><span class="method-badge">PP</span>Pre-auth Partial</div>
-    <div class="nav-item sub" data-target="preauthreversal"><span class="method-badge">PR</span>Pre-Auth Reversal</div>
+    <div class="nav-item sub" data-target="preauthreversal"><span class="method-badge">PR</span>Pre-auth Reversal</div>
     <div class="nav-item" data-target="searchtransaction"><span class="method-badge">POST</span>Search Transaction</div>
-  </div>
-
-  <div class="nav-group">
-    <div class="nav-group-title">Alternative Payments</div>
-    <div class="nav-item" data-target="apmtransaction"><span class="method-badge">POST</span>APM Transaction</div>
   </div>
 
   <div class="nav-group">
@@ -563,11 +556,10 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="nav-item" data-target="printpending"><span class="method-badge">POST</span>Print Pending Transactions</div>
     <div class="nav-item" data-target="canceltransaction"><span class="method-badge getpost">G/P</span>Cancel Transaction</div>
     <div class="nav-item" data-target="querytransaction"><span class="method-badge get">GET</span>Query Transaction</div>
-    <div class="nav-item" data-target="offlinetransmission"><span class="method-badge">POST</span>Voucher Entry</div>
+    <div class="nav-item" data-target="offlinetransmission"><span class="method-badge">POST</span>SAF Upload</div>
     <div class="nav-item" data-target="shiftactions"><span class="method-badge">POST</span>Shift Actions</div>
     <div class="nav-item" data-target="reports"><span class="method-badge">POST</span>Reports</div>
     <div class="nav-item" data-target="transactionlisting"><span class="method-badge">POST</span>Transaction Listing</div>
-    <div class="nav-item" data-target="dumplogs"><span class="method-badge">POST</span>Dump Logs</div>
   </div>
 
   <div class="nav-group">
@@ -599,9 +591,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <div class="hero-eyebrow">REST API Specification</div>
         <h1>POS Integration API</h1>
         <div class="hero-meta">
-          <span class="hero-badge">API v1.3.19</span>
+          <span class="hero-badge">API v1.3.26</span>
           <span class="hero-badge">WPAY</span>
-          <span class="hero-badge">QA_1.3.19</span>
+          <span class="hero-badge">QA_1.3.26</span>
         </div>
         <p class="hero-desc">REST API specification for integrating a third-party POS system with a WPAY payment terminal over a local network. Covers all transaction types, receipt options, async mode, and signature approval flow.</p>
       </div>
@@ -625,9 +617,6 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li><strong>X-API-KEY</strong> — required when the TMS-configured authorization key is set. Missing or wrong key returns an error response. The client may generate the key in any form (maximum <strong>32</strong> characters); the value configured in TMS and the value sent in <code>X-API-KEY</code> must be identical. Sample TMS key: <code>6B9F2A81D3E47C5A0B1F9E8D7C6B5A43</code>.</li>
         </ul>
       </div>
-
-      <div class="table-label">Test Tool</div>
-      <div class="section-desc"><p>Postman REST client. Send requests, inspect responses, and easily debug REST APIs.</p></div>
 
       <div class="table-label">Quick Start</div>
       <ol class="quick-start-list">
@@ -733,7 +722,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <line x1="115" y1="322" x2="570" y2="322" stroke="#888" stroke-width="1.2" marker-end="url(#seq-arr2)"/>
           <text x="342" y="317" text-anchor="middle" font-size="8" fill="#00774F" font-family="monospace">GET /querytransaction</text>
           <line x1="570" y1="340" x2="115" y2="340" stroke="#00774F" stroke-width="1.5" stroke-dasharray="5 3" marker-end="url(#seq-arr2)"/>
-          <text x="342" y="358" text-anchor="middle" font-size="8" fill="#024042" font-weight="600">Status: 11 — Waiting For Signature Confirmation From Client</text>
+          <text x="342" y="358" text-anchor="middle" font-size="8" fill="#024042" font-weight="600">Status: 11 — Waiting for merchant to confirm signature</text>
           <line x1="115" y1="376" x2="570" y2="376" stroke="#00a26d" stroke-width="1.5" marker-end="url(#seq-arr2)"/>
           <text x="342" y="371" text-anchor="middle" font-size="8" fill="#00774F" font-family="monospace">POST /approvesignature  Approval: approve or reject</text>
           <line x1="570" y1="394" x2="115" y2="394" stroke="#00774F" stroke-width="1.2" stroke-dasharray="5 3" marker-end="url(#seq-arr2)"/>
@@ -764,32 +753,48 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div id="ref-enum-12" class="ref-table-anchor" style="margin-top:26px;">
         <div class="table-label">Table ENUM-12 — Status and StatusText field values</div>
         <p class="ref-table-caption">Enum table — colocated with <a class="doc-table-ref" href="#overview-syncasync">Sync vs Async</a>. Used by <a class="doc-table-ref" href="#querytransaction">Query Transaction</a> and async <code>Status</code> on transaction responses. Also in <a class="doc-table-ref" href="#ref-tables-index">Table Index</a>.</p>
-        <p class="ref-table-caption">Here are some values for the <code>Status</code> and <code>StatusText</code> fields returned in async mode responses (<code>ResponseType: "querytransaction"</code>).</p>
+        <p class="ref-table-caption">Values of the <code>Status</code> and <code>StatusText</code> fields returned in async mode responses (<code>ResponseType: "querytransaction"</code>). <code>StatusText</code> values are shown for English.</p>
         <table class="field-table">
           <colgroup>
             <col style="width:30%">
             <col style="width:28%">
             <col style="width:42%">
           </colgroup>
-          <thead><tr><th>Value of "Status" field</th><th>Value of "StatusText" field</th><th>Describe</th></tr></thead>
+          <thead><tr><th>Value of "Status" field</th><th>Value of "StatusText" field</th><th>Description</th></tr></thead>
           <tbody>
-                        <tr><td class="field-name">None = 0</td><td></td><td>No active transaction stage.</td></tr>
+            <tr><td class="field-name">None = 0</td><td></td><td>No active transaction stage. <code>StatusText</code> is empty.</td></tr>
             <tr><td class="field-name">TransactionCompleted = 1</td><td>Transaction completed</td><td>The transaction has been completely processed. The <code>Transaction</code> object in the response contains the full result when status equals <code>1</code>.</td></tr>
             <tr><td class="field-name">Initialize = 2</td><td>Initializing transaction</td><td>The transaction is being initialized.</td></tr>
             <tr><td class="field-name">AwaitingUserInteraction = 3</td><td>Awaiting user interaction</td><td>Waiting for the user to complete required actions (signature, select account type ...)</td></tr>
             <tr><td class="field-name">WaitingForCard = 4</td><td>Waiting for card</td><td>Waiting for the card to be presented.</td></tr>
             <tr><td class="field-name">CardProcessing = 5</td><td>Card processing</td><td>The card is currently being processed.</td></tr>
-            <tr><td class="field-name">TransactionProcessing = 6</td><td>Transaction Processing</td><td>The transaction is being processed.</td></tr>
-            <tr><td class="field-name">TransactionProcessed = 7</td><td>Transaction Processed</td><td>The Transaction has been processed.</td></tr>
-            <tr><td class="field-name">WaitingForCardRemove = 8</td><td>Waiting For Card Remove</td><td>The transaction requires selecting an waiting for card remove.</td></tr>
-            <tr><td class="field-name">WaitingForMerchantCard = 9</td><td>Waiting For Merchant Card</td><td>The transaction requires the user to swipe merchant card.</td></tr>
-            <tr><td class="field-name">WaitingForSignatureConfirmation = 10</td><td>Waiting For Signature Confirmation</td><td>The payment app is auto-approving the signature without POS app interaction.</td></tr>
-            <tr><td class="field-name">WaitingForSignatureConfirmationFromClient = 11</td><td>Waiting For Signature Confirmation From Client</td><td>Waiting for the POS app to approve or reject the captured signature. Call <strong>Approve Signature</strong> (<code>POST /approvesignature</code>) with <code>DigitalSig</code> data, then continue polling.</td></tr>
-            <tr><td class="field-name">GettingSignatureFromCustomer = 12</td><td>Getting Signature From Customer</td><td>The system is prompting the customer to provide a signature.</td></tr>
-            <tr><td class="field-name">DCCSelecting = 13</td><td>DCC Selecting</td><td>The system is presenting DCC (Dynamic Currency Conversion) options to the user.</td></tr>
+            <tr><td class="field-name">TransactionProcessing = 6</td><td>Transaction processing</td><td>The transaction is being processed.</td></tr>
+            <tr><td class="field-name">TransactionProcessed = 7</td><td>Transaction processed<br>Transaction Cancelled</td><td>The transaction has been processed. A canceled transaction is also reported as <code>Status: 7</code>; in that case <code>StatusText</code> is <code>Transaction Cancelled</code>.</td></tr>
+            <tr><td class="field-name">WaitingForCardRemove = 8</td><td>Waiting for card remove</td><td>Waiting for the cardholder to remove the card.</td></tr>
+            <tr><td class="field-name">WaitingForMerchantCard = 9</td><td>Waiting for merchant card</td><td>Waiting for the merchant to swipe the merchant card.</td></tr>
+            <tr><td class="field-name">WaitingForSignatureConfirmation = 10</td><td>Waiting for signature confirm</td><td>The payment app is auto-approving the signature without POS app interaction.</td></tr>
+            <tr><td class="field-name">WaitingForSignatureConfirmationFromClient = 11</td><td>Waiting for merchant to confirm signature</td><td>Waiting for the POS app to approve or reject the captured signature. Call <strong>Approve Signature</strong> (<code>POST /approvesignature</code>) with <code>DigitalSig</code> data, then continue polling.</td></tr>
+            <tr><td class="field-name">GettingSignatureFromCustomer = 12</td><td>Getting signature from customer</td><td>The system is prompting the customer to provide a signature.</td></tr>
+            <tr><td class="field-name">DCCSelecting = 13</td><td>DCC in progress</td><td>The system is presenting DCC (Dynamic Currency Conversion) options to the user.</td></tr>
             <tr><td class="field-name">SelectAccountType = 14</td><td>Select Account Type</td><td>Waiting for the cardholder to select an account type.</td></tr>
             <tr><td class="field-name">EnterPin = 15</td><td>Enter PIN</td><td>Waiting for the cardholder to enter a PIN.</td></tr>
-            <tr><td class="field-name">WaitingForProductData = 16</td><td>Waiting For Product Data</td><td>Waiting for product/SKU data from the POS.</td></tr>
+            <tr><td class="field-name">WaitingForProductData = 16</td><td></td><td>Waiting for product/SKU data from the POS. <code>StatusText</code> is empty.</td></tr>
+            <tr><td class="field-name">ConfirmDCC = 17</td><td>Accept currency conversion?</td><td>Waiting for the cardholder to accept or decline the currency conversion.</td></tr>
+            <tr><td class="field-name">ConfirmSignature = 18</td><td>Is signature correct?</td><td>Waiting for the merchant to confirm the signature on the terminal.</td></tr>
+            <tr><td class="field-name">ConfirmRefund = 19</td><td>Confirm refund transaction?</td><td>Waiting for confirmation of the refund on the terminal.</td></tr>
+            <tr><td class="field-name">ConfirmPreAuthComplete = 20</td><td>Complete pre-auth transaction?</td><td>Waiting for confirmation of the pre-auth completion on the terminal.</td></tr>
+            <tr><td class="field-name">ConfirmCharity = 21</td><td>Donate to charity?</td><td>Waiting for the cardholder to accept or decline a donation.</td></tr>
+            <tr><td class="field-name">ReviewTransaction = 22</td><td>Review transaction details?</td><td>Waiting for the transaction details to be reviewed on the terminal.</td></tr>
+            <tr><td class="field-name">ConfirmSurcharge = 23</td><td>Accept surcharge amount?</td><td>Waiting for the cardholder to accept or decline the surcharge.</td></tr>
+            <tr><td class="field-name">PrintReceiptPrompt = 24</td><td>Print customer receipt?</td><td>Waiting for a choice on whether to print the customer receipt.</td></tr>
+            <tr><td class="field-name">SignatureDone = 25</td><td>Customer finished signing?</td><td>Waiting for confirmation that the customer has finished signing.</td></tr>
+            <tr><td class="field-name">SelectApplication = 26</td><td>Select Application</td><td>Waiting for the cardholder to select a card application.</td></tr>
+            <tr><td class="field-name">TipDonationOptions = 27</td><td>Tip &amp; Donation Options</td><td>The tip and donation options screen is displayed.</td></tr>
+            <tr><td class="field-name">TipOptions = 28</td><td>Tip Options</td><td>The tip options screen is displayed.</td></tr>
+            <tr><td class="field-name">DonationOptions = 29</td><td>Donation Options</td><td>The donation options screen is displayed.</td></tr>
+            <tr><td class="field-name">MotoDetails = 30</td><td>Enter MOTO details</td><td>Waiting for MOTO details to be entered on the terminal.</td></tr>
+            <tr><td class="field-name">ManualCardEntry = 31</td><td>Enter card details</td><td>Waiting for card details to be entered manually on the terminal.</td></tr>
+            <tr><td class="field-name">PrintMerchantReceiptPrompt = 32</td><td>Print merchant receipt?</td><td>Waiting for a choice on whether to print the merchant receipt.</td></tr>
           </tbody>
         </table>
       </div>
@@ -833,7 +838,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
 
       <div class="table-label">Request Authorization</div>
       <div class="section-desc">
-        <p>This feature is not a default-enabled one, so resellers need to set the key from TMS to restrict clients' requests. After configuring this authorization value, clients need to add it as a header item to authorize requests (<code>X-API-KEY</code>). The Authorization Key set in TMS allows a maximum of <strong>32</strong> characters.</p>
+        <p>This feature is disabled by default, so resellers need to set the key in TMS to restrict clients' requests. After configuring this authorization value, clients need to add it as a header item to authorize requests (<code>X-API-KEY</code>). The Authorization Key set in TMS allows a maximum of <strong>32</strong> characters.</p>
         <p>There is no required generation algorithm. The client may create the key in any format they choose (letters, digits, hex string, etc.), as long as the same value is configured on TMS and sent in the <code>X-API-KEY</code> request header.</p>
         <p>Sample Authorization Key used as a TMS template default:</p>
         <div class="code-block-wrap code-single" style="margin-top:8px;margin-bottom:12px;">
@@ -867,7 +872,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td>Get Merchant List</td><td>GET / POST</td><td>merchantlist</td></tr>
             <tr><td>Get Allowed Transactions</td><td>POST</td><td>getAllowedTransactions</td></tr>
             <tr><td>Health Check</td><td>GET</td><td>healthcheck</td></tr>
-            <tr><td>Bring App To Foreground</td><td>POST</td><td>bringapptoforeground</td></tr>
+            <tr><td>Bring App to Foreground</td><td>POST</td><td>bringapptoforeground</td></tr>
             <tr><td>Purchase</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Refund Only</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Void</td><td>POST</td><td>transaction</td></tr>
@@ -875,14 +880,11 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td>Purchase Cash</td><td>POST</td><td>transaction</td></tr>
             <tr><td>MOTO Purchase</td><td>POST</td><td>transaction</td></tr>
             <tr><td>MOTO Refund</td><td>POST</td><td>transaction</td></tr>
+            <tr><td>Balance Enquiry</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Pre-auth</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Pre-auth Complete</td><td>POST</td><td>transaction</td></tr>
-            <tr><td>Cancel Pre-Auth</td><td>POST</td><td>transaction</td></tr>
-            <tr><td>Incremental Pre-Auth</td><td>POST</td><td>transaction</td></tr>
-            <tr><td>Pre-auth Partial</td><td>POST</td><td>transaction</td></tr>
-            <tr><td>Pre-Auth Reversal</td><td>POST</td><td>transaction</td></tr>
+            <tr><td>Pre-auth Reversal</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Search Transaction</td><td>POST</td><td>transactionsearch</td></tr>
-            <tr><td>APM Transaction (Alipay / WeChat / CentraPay)</td><td>POST</td><td>transaction</td></tr>
             <tr><td>Reprint</td><td>POST</td><td>reprint</td></tr>
             <tr><td>Card Verification</td><td>POST</td><td>querycard</td></tr>
             <tr><td>Settlement Enquiry</td><td>POST</td><td>settlement</td></tr>
@@ -892,11 +894,10 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td>Print Pending Transactions</td><td>POST</td><td>printpendingtransaction</td></tr>
             <tr><td>Cancel Transaction</td><td>GET / POST</td><td>canceltransaction</td></tr>
             <tr><td>Query Transaction</td><td>GET</td><td>querytransaction</td></tr>
-            <tr><td>Voucher Entry</td><td>POST</td><td>voucherEntry</td></tr>
+            <tr><td>SAF Upload</td><td>POST</td><td>voucherEntry</td></tr>
             <tr><td>Shift Actions</td><td>POST</td><td>shiftactions</td></tr>
             <tr><td>Reports</td><td>POST</td><td>reports</td></tr>
             <tr><td>Transaction Listing</td><td>POST</td><td>transactionlisting</td></tr>
-            <tr><td>Dump Logs</td><td>POST</td><td>dumplogs</td></tr>
             <tr><td>Approve Signature</td><td>POST</td><td>approvesignature</td></tr>
           </tbody>
         </table>
@@ -924,7 +925,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       </table>
 
       <div class="info-card" style="margin-top:20px;">
-        <p>Boolean encoding rules are documented in <a class="doc-table-ref" href="#overview-booleantype">Boolean Type</a>. Use that setting when interpreting <code>Success</code> values in this section.</p>
+        <p><code>Success</code> is a JSON boolean (<code>true</code>/<code>false</code>); see <a class="doc-table-ref" href="#overview-booleantype">Boolean Type</a>.</p>
       </div>
 
       <div class="table-label" style="margin-top:20px;">Choosing the response path</div>
@@ -932,7 +933,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <p>After parsing the envelope, use the fields inside <code>Response</code> to decide which path applies:</p>
         <ul>
           <li><code>Response.ErrMessage</code> is present → <strong>API error / exception</strong> (HTTP is non-2xx). Read <code>ErrMessage</code>, <code>Suggestion</code>, and <code>StatusCode</code>. There is no <code>Success</code> field on this path.</li>
-          <li><code>Response.Success</code> or <code>Response.Transaction.Success</code> is present → <strong>business outcome</strong> (HTTP is <code>200</code>). Approved/completed vs declined/failed depends on the terminal's boolean encoding (<code>"1"</code>/<code>"0"</code> or <code>true</code>/<code>false</code>); read <code>ResponseText</code> on failure/decline.</li>
+          <li><code>Response.Success</code> or <code>Response.Transaction.Success</code> is present → <strong>business outcome</strong> (HTTP is <code>200</code>). <code>true</code> = approved/completed, <code>false</code> = declined/failed; read <code>ResponseText</code> on failure/decline.</li>
           <li>Neither applies (e.g. <code>merchantlist</code>) → data payload only; HTTP <code>200</code> means the call succeeded.</li>
         </ul>
       </div>
@@ -945,7 +946,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">200</td><td>Request accepted; operation finished or data returned</td><td>Business fields — <code>Success</code>, <code>ResponseText</code>, <code>Transaction</code>, etc.</td></tr>
           <tr><td class="field-name">400</td><td>Invalid request data, bad <code>TxnType</code>, amount validation, malformed body</td><td><code>ErrMessage</code>, <code>StatusCode: "400"</code></td></tr>
           <tr><td class="field-name">401</td><td><code>X-API-KEY</code> missing or incorrect (when TMS authorization is enabled)</td><td><code>ErrMessage</code>, <code>StatusCode: "401"</code></td></tr>
-          <tr><td class="field-name">403</td><td>Terminal not ready — logon required, merchant not ready, terminal busy, feature not supported</td><td><code>ErrMessage</code>, <code>StatusCode: "403"</code>, often <code>Suggestion</code></td></tr>
+          <tr><td class="field-name">403</td><td>Terminal not ready — logon required, merchant not ready, terminal busy, feature not available, amount required</td><td><code>ErrMessage</code>, <code>StatusCode: "403"</code>, often <code>Suggestion</code></td></tr>
           <tr><td class="field-name">500</td><td>Internal server error</td><td>May have no JSON body; some async operations defer the response until processing completes</td></tr>
         </tbody>
       </table>
@@ -963,7 +964,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <div class="info-card">
           <h4>Business fields (HTTP 200)</h4>
           <ul>
-            <li><code>Response.Success</code> — true = success, false = failure (encoding per <a class="doc-table-ref" href="#overview-booleantype">Boolean Type</a>); read <code>ResponseText</code> on failure.</li>
+            <li><code>Response.Success</code> — <code>true</code> = success, <code>false</code> = failure; read <code>ResponseText</code> on failure.</li>
             <li><code>Response.Transaction.Success</code> — same rule on transaction endpoints.</li>
             <li>Async mode — poll <code>Status</code> / <code>StatusText</code>; see <a class="doc-table-ref" href="#overview-syncasync">Sync vs Async</a>.</li>
             <li>Sync mode — the HTTP connection stays open until the terminal finishes and returns the full body.</li>
@@ -983,7 +984,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Response": {
     "Transaction": {
       "TxnType": "P",
-      "Success": "1",
+      "Success": true,
       "lAmount": 100,
       "lszApprovalCode": "327710",
       "szAuthorizationResponseCode": "00"
@@ -1002,7 +1003,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Response": {
     "Transaction": {
       "TxnType": "P",
-      "Success": "0",
+      "Success": false,
       "ResponseText": "Transaction Cancelled"
     }
   }
@@ -1025,7 +1026,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div class="code-block-wrap code-single" style="margin-top:12px;">
         <div class="code-block-label">Sample response — merchant not ready / logon required</div>
         <pre><code class="language-json">{
-  "SessionId": "2174267867",
+  "SessionId": "{{sessionId}}",
   "ResponseType": "transaction",
   "Response": {
     "ErrMessage": "00986211 requires to Logon",
@@ -1041,8 +1042,16 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <li><strong>Merchant not ready</strong> — selected merchant cannot accept transactions. Check <code>Mode</code> via <a class="doc-table-ref" href="#merchantlist">Get Merchant List</a> — see <a class="doc-table-ref" href="#ref-enum-10">Table ENUM-10</a>.</li>
           <li><strong>Terminal busy</strong> — another operation is in progress, or auto-logon is running.</li>
           <li><strong>Invalid API key (401)</strong> — <code>X-API-KEY</code> header missing or wrong when TMS authorization is enabled.</li>
+          <li><strong>Feature not available</strong> — the requested <code>TxnType</code> or operation is disabled on the terminal. <code>ErrMessage</code>: <code>"This feature is not available"</code>.</li>
+          <li><strong>Amount required</strong> — <code>Amount</code> is missing or 0 (all transaction types except <code>V</code>, <code>BE</code> and <code>C</code>): <code>"Amount Cannot Empty"</code>. <code>AmtCash</code> is missing or 0 for <code>C</code> or <code>PC</code>: <code>"Cash value is required"</code>.</li>
+          <li><strong>Amount out of range (400)</strong> — <code>Amount</code> or <code>AmtCash</code> is above the terminal maximum transaction amount. <code>ErrMessage</code> is <code>"Amount must be between 0 and"</code> or <code>"AmtCash must be between 0 and"</code>, followed by the formatted maximum amount.</li>
           <li><strong>Invalid request (400)</strong> — malformed JSON, invalid <code>TxnType</code>, or failed field validation.</li>
         </ul>
+      </div>
+
+      <div class="info-card" style="margin-top:16px;" id="locked-terminal">
+        <h4>Locked terminal</h4>
+        <p>If the payment app is locked, a request that starts processing on the terminal first shows the administrator login. After a successful login the request continues. If the operator cancels the login, the request fails with <code>"Transaction Cancelled"</code>; if the login times out, with <code>"Time Outs"</code>. For a transaction request, the message is returned in <code>ResponseText</code> with <code>Success: false</code>.</p>
       </div>
 
       <div class="info-card" style="margin-top:16px;">
@@ -1057,6 +1066,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
             <tr><td>Logon / merchant not ready</td><td>403</td><td><code>ErrMessage</code>, <code>Suggestion</code>, <code>StatusCode: "403"</code></td></tr>
             <tr><td>Terminal busy</td><td>403</td><td><code>ErrMessage</code>, <code>StatusCode: "403"</code></td></tr>
             <tr><td>Invalid API key</td><td>401</td><td><code>ErrMessage</code>, <code>StatusCode: "401"</code></td></tr>
+            <tr><td>Feature not available / amount required</td><td>403</td><td><code>ErrMessage</code>, <code>StatusCode: "403"</code></td></tr>
+            <tr><td>Amount out of range</td><td>400</td><td><code>ErrMessage</code>, <code>StatusCode: "400"</code></td></tr>
             <tr><td>Invalid request</td><td>400</td><td><code>ErrMessage</code>, <code>StatusCode: "400"</code></td></tr>
             <tr><td>Terminal unreachable</td><td>—</td><td>No HTTP response; use <a class="doc-table-ref" href="#healthcheck">Health Check</a></td></tr>
           </tbody>
@@ -1070,23 +1081,11 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="middle-col">
       <h2 class="section-title">Boolean Type</h2>
       <div class="section-desc">
-        <p>Boolean-like values are controlled by a <strong>TMS configuration</strong>.</p>
+        <p>All boolean fields in request and response bodies are JSON booleans: <code>true</code> or <code>false</code>.</p>
       </div>
       <div class="info-card">
-        <p>The terminal uses one of two encodings for request and response bodies:</p>
-        <ul>
-          <li><strong>String mode</strong> — <code>"1"</code> / <code>"0"</code> (yes/no, enabled/disabled, approved/declined)</li>
-          <li><strong>JSON boolean mode</strong> — <code>true</code> / <code>false</code></li>
-        </ul>
-        <p style="margin-top:8px;">Integrators must use the encoding that matches the terminal's TMS setting. Do not mix formats in a single request. Applies to <code>Success</code>, <code>AsyncMode</code>, <code>WithReceiptImageData</code>, <code>DisablePrinting</code> (transaction, APM, reprint, card status, settlement, offline transmission), transaction flag fields (<code>fAuthorized</code>, <code>fCanVoid</code>, etc.), and other boolean switches documented on each endpoint.</p>
+        <p>This applies to <code>Success</code>, <code>AsyncMode</code>, <code>WithReceiptImageData</code>, <code>DisablePrinting</code>, transaction flag fields (<code>fAuthorized</code>, <code>fCanVoid</code>, etc.), and every other field documented as <code>bool</code>. Send JSON booleans, not strings or numbers.</p>
       </div>
-      <div class="doc-figure-wrap">
-        <figure class="doc-figure">
-          <img src="config_booleantype.png" alt="POS Integration Options screen showing Boolean data format type configured in TMS">
-        </figure>
-        <span class="doc-figure-caption"><strong>POS Integration Options</strong> — the <strong>Boolean data format type</strong> is configured on the terminal via TMS. Choose <strong>String 1/0</strong> for <code>"1"</code>/<code>"0"</code> encoding or <strong>Boolean</strong> for <code>true</code>/<code>false</code> encoding in request and response bodies.</span>
-      </div>
-      <p class="section-desc" style="margin-top:10px;margin-bottom:0;">JSON examples in this document may show one encoding (string or boolean) for illustration; always match the terminal TMS setting in live integrations.</p>
     </div>
   </div>
 
@@ -1147,7 +1146,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <tbody>
           <tr><td class="field-name">SessionId</td><td class="field-type">string(36)</td><td><span class="badge badge-m">M</span></td><td>SessionId of the request transaction.</td></tr>
           <tr><td class="field-name">ResponseType</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Always <code>"merchantlist"</code>.</td></tr>
-          <tr><td class="field-name">Merchants</td><td class="field-type">array</td><td><span class="badge badge-m">M</span></td><td>Array of merchant objects, each containing Id, Name, and Mode.</td></tr>
+          <tr><td class="field-name">Merchants</td><td class="field-type">array</td><td><span class="badge badge-m">M</span></td><td>Array of merchant objects, each containing Id, Name, and Mode. Up to 26 merchants are returned.</td></tr>
           <tr><td class="field-name">Id</td><td class="field-type">string(2)</td><td><span class="badge badge-m">M</span></td><td>Merchant identifier.</td></tr>
           <tr><td class="field-name">Name</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Merchant display name.</td></tr>
           <tr><td class="field-name">Mode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Merchant mode. Some possible values are mentioned in <a class="doc-table-ref" href="#ref-enum-10">Table ENUM-10</a>.</td></tr>
@@ -1206,7 +1205,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="middle-col">
       <h2 class="section-title">Get Allowed Transactions</h2>
       <div class="section-desc">
-        <p>Returns the transaction types enabled for a merchant on this terminal (purchase, refund, pre-auth, APM wallets, etc.). Use this to build dynamic menus or validate <code>TxnType</code> before calling <code>transaction</code>.</p>
+        <p>Returns the transaction types enabled for a merchant on this terminal (purchase, refund, pre-auth, etc.). Use this to build dynamic menus or validate <code>TxnType</code> before calling <code>transaction</code>.</p>
       </div>
       <div class="table-label">Request Body Fields</div>
       <table class="field-table">
@@ -1273,11 +1272,11 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <!--  BRING APP TO FOREGROUND  -->
   <div class="section-container" id="bringapptoforeground">
     <div class="middle-col">
-      <h2 class="section-title">Bring App To Foreground</h2>
-      <div class="section-desc"><p>This function allows moving the POS app to the foreground if the application is in the background.</p>
+      <h2 class="section-title">Bring App to Foreground</h2>
+      <div class="section-desc"><p>This function moves the payment app to the foreground if the application is in the background.</p>
         <p>The request to bring the application to the foreground uses the POST method and does not require a request body to perform this function.</p></div>
       <div class="table-label">Response Fields</div>
-      <p class="section-desc">Below is a list of fields that will appear in the 'Bring Application to Foreground' response. Fields labeled with 'M' (Mandatory) are those that will appear when the request is either successful or failed.</p>
+      <p class="section-desc">Below is a list of fields that will appear in the 'Bring Application to Foreground' response. Fields labeled with 'M' (Mandatory) appear whether the request succeeds or fails.</p>
       <table class="field-table">
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
@@ -1300,7 +1299,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "bringapptoforeground",
   "Response": {
-    "Success": "1",
+    "Success": true,
     "ResponseText": "Application brought to the foreground"
   }
 }</code></pre></div>
@@ -1308,7 +1307,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "bringapptoforeground",
   "Response": {
-    "Success": "0",
+    "Success": false,
     "ResponseText": "Application is not allowed to bring itself to the foreground"
   }
 }</code></pre></div>
@@ -1335,10 +1334,13 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Type of transaction — value depends on operation (see subsections).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Transaction amount in cents. Must be greater than 0 (where applicable).</td></tr>
           <tr><td class="field-name">TxnRef</td><td class="field-type">string(64)</td><td><span class="badge badge-o">O</span></td><td>Reference number attached to the transaction. Appears on the receipt.</td></tr>
-          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it (e.g. Refund).</td></tr>
+          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code for the transaction type, when the terminal requires one. See <a class="doc-table-ref" href="#accesscode-notes">AccessCode behavior</a>.</td></tr>
           <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether tip entry is offered. Default disabled.</td></tr>
-          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>AmtTip of the sale in cents.</td></tr>
-          <tr><td class="field-name">EnablePreEMVFee</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>When present, POS Integration owns PreEMV fee settings for this request. Exact JSON key casing required. See <a class="doc-table-ref" href="#enablepreemvfee-notes">EnablePreEMVFee behaviour</a>.</td></tr>
+          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
+          <tr><td class="field-name">EnableDonation</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether a donation is added to the transaction. Default <code>false</code>. See <a class="doc-table-ref" href="#enabledonation-notes">EnableDonation behavior</a>.</td></tr>
+          <tr><td class="field-name">lDonationAmount</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Donation amount in cents. Used only when <code>EnableDonation</code> is <code>true</code>.</td></tr>
+          <tr><td class="field-name">PanSource</td><td class="field-type">string(1)</td><td><span class="badge badge-o">O</span></td><td>MOTO order type: <code>"0"</code> internet order, <code>"1"</code> telephone order, <code>"2"</code> mail order. When set, a Purchase (<code>P</code>) is processed as a MOTO purchase and a Refund (<code>R</code>) as a MOTO refund. Omit for card-present transactions.</td></tr>
+          <tr><td class="field-name">EnablePreEMVFee</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>When present, POS Integration owns PreEMV fee settings for this request. Exact JSON key casing required. See <a class="doc-table-ref" href="#enablepreemvfee-notes">EnablePreEMVFee behavior</a>.</td></tr>
           <tr><td class="field-name">fPurchaseFeePercent</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If true, <code>PurchaseFee</code> is a percentage; if false, a fixed amount in cents. Used when POS owns PreEMV fee.</td></tr>
           <tr><td class="field-name">PurchaseFee</td><td class="field-type">ushort</td><td><span class="badge badge-o">O</span></td><td>Purchase PreEMV fee value (percent or cents).</td></tr>
           <tr><td class="field-name">fCashOutFeePercent</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If true, <code>CashOutFee</code> is a percentage; if false, a fixed amount in cents. Used when POS owns PreEMV fee.</td></tr>
@@ -1351,18 +1353,37 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         </tbody>
       </table>
       <div class="info-card" style="margin-top:16px;" id="enabletip-notes">
-        <h4>EnableTip behaviour</h4>
+        <h4>EnableTip behavior</h4>
         <ul>
           <li>If <code>AmtTip</code> &gt; 0, the request is sent with the Tip value regardless of <code>EnableTip</code>.</li>
           <li>If <code>AmtTip</code> is 0 and <code>EnableTip</code> is true and the payment app allows tip, a popup prompts the user to enter a Tip value.</li>
           <li>If the payment app is not set up to allow tip, the request proceeds without a Tip value.</li>
         </ul>
       </div>
+      <div class="info-card" style="margin-top:16px;" id="enabledonation-notes">
+        <h4>EnableDonation behavior</h4>
+        <ul>
+          <li>The donation is added only when <code>EnableDonation</code> is <code>true</code>, <code>lDonationAmount</code> &gt; 0, and donation is enabled on the terminal.</li>
+          <li>Applies to Purchase, MOTO purchase, Purchase with Cash Out, and Pre-auth. For other transaction types the donation is ignored.</li>
+        </ul>
+      </div>
+      <div class="info-card" style="margin-top:16px;" id="accesscode-notes">
+        <h4>AccessCode behavior</h4>
+        <p>The terminal checks each request against the operator role configured on the terminal.</p>
+        <ul>
+          <li>If the role has no access code for the requested function, <code>AccessCode</code> is ignored.</li>
+          <li>If <code>AccessCode</code> is sent and matches, the request proceeds. If it does not match, the request fails with <code>"Invalid Access Code"</code>.</li>
+          <li>If <code>AccessCode</code> is omitted and the role requires one, the terminal prompts the operator to enter it. If the operator cancels, the request fails with <code>"Transaction Cancelled"</code>; if the prompt times out, with <code>"Timeout"</code>.</li>
+          <li>If the function is not allowed for the current role, the request fails with <code>"Access Denied"</code>.</li>
+          <li>If the terminal role configuration is missing, the request fails with <code>"Error Invalid Data"</code>.</li>
+        </ul>
+        <p>A failed check returns <code>Success: false</code> with the message in <code>ResponseText</code>. Messages are shown for English.</p>
+      </div>
       <div class="info-card" style="margin-top:16px;" id="enablepreemvfee-notes">
-        <h4>EnablePreEMVFee behaviour</h4>
+        <h4>EnablePreEMVFee behavior</h4>
         <ul>
           <li>Applies to <code>TxnType</code> <code>P</code>, <code>C</code>, and <code>PC</code>.</li>
-          <li>If <code>EnablePreEMVFee</code> is <strong>omitted</strong>, the terminal uses the merchant TMS PreEMV / PreSurcharge settings (standalone behaviour).</li>
+          <li>If <code>EnablePreEMVFee</code> is <strong>omitted</strong>, the terminal uses the merchant TMS PreEMV / PreSurcharge settings (standalone behavior).</li>
           <li>If <code>EnablePreEMVFee</code> is <strong>present</strong> (true or false), the request overrides TMS for this transaction: <code>true</code> enables PreEMV fee with the supplied fee fields; <code>false</code> disables PreEMV fee for the request.</li>
           <li>JSON key must be exactly <code>EnablePreEMVFee</code> (capital <code>EMV</code>).</li>
         </ul>
@@ -1375,7 +1396,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <thead><tr><th>Merchant Field Value</th><th>Single Merchant</th><th>Multi Merchant</th></tr></thead>
           <tbody>
             <tr><td>Not set or invalid (null, "0", "abc", etc.)</td><td>Automatically select the default merchant</td><td>Return error – Merchant Id not found</td></tr>
-            <tr><td>Valid value (parsable to int)</td><td>Use the provided select merchant</td><td>Use the provided select merchant</td></tr>
+            <tr><td>Valid value (parsable to int)</td><td>Use the selected merchant</td><td>Use the selected merchant</td></tr>
           </tbody>
         </table>
       </div>
@@ -1403,18 +1424,19 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">ResponseText</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Text of Response. Commonly occurs when a transaction is declined.</td></tr>
           <tr><td class="field-name">PrinterStatus</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Printer state text returned by the terminal when available.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-m">M</span></td><td>Indicates the receipt format returned. See <a class="doc-table-ref" href="#ref-res-01">Table RES-01</a>.</td></tr>
-          <tr><td class="field-name">Transactions</td><td class="field-type">array</td><td><span class="badge badge-m">M</span></td><td>Includes a list of approved transactions corresponding to the <code>FuncType</code> on the terminal. Used in list responses; single transaction responses use <code>Transaction</code> object instead.</td></tr>
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant that executed the transaction.</td></tr>
           <tr><td class="field-name">TxnType</td><td class="field-type">string(9)</td><td><span class="badge badge-m">M</span></td><td>Type of transaction (matches request <code>TxnType</code>).</td></tr>
-          <tr><td class="field-name">IdShift</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift's identifier.</td></tr>
-          <tr><td class="field-name">IdShiftName</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift Name's identifier.</td></tr>
+          <tr><td class="field-name">IdShift</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift identifier.</td></tr>
+          <tr><td class="field-name">IdShiftName</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Shift name identifier.</td></tr>
           <tr><td class="field-name">lAmount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The approved amount.</td></tr>
           <tr><td class="field-name">lTipAmount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The approved tip amount.</td></tr>
-          <tr><td class="field-name">lCashOut</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The approved cash amount.</td></tr>
-          <tr><td class="field-name">lCashOutFee</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The cash out transaction fees.</td></tr>
-          <tr><td class="field-name">lSurChargeTax</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The Tax surcharge.</td></tr>
+          <tr><td class="field-name">lCashOut</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The approved cash amount.</td></tr>
+          <tr><td class="field-name">lBalance</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Available (cleared funds) balance in cents, returned for Balance Enquiry. Can be negative.</td></tr>
+          <tr><td class="field-name">lLedgerBalance</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Ledger balance in cents, returned for Balance Enquiry. Can be negative.</td></tr>
+          <tr><td class="field-name">lCashOutFee</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The cash-out transaction fee.</td></tr>
+          <tr><td class="field-name">lSurChargeTax</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The tax surcharge.</td></tr>
           <tr><td class="field-name">lDiscount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Discount amount of the transaction.</td></tr>
-          <tr><td class="field-name">lDiscountPercent</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Discount Percentage of the transaction.</td></tr>
+          <tr><td class="field-name">lDiscountPercent</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Discount percentage of the transaction.</td></tr>
           <tr><td class="field-name">iReward</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The transaction reward.</td></tr>
           <tr><td class="field-name">lAuthorizedTotal</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The total approved amount of the transaction.</td></tr>
           <tr><td class="field-name">lDonationAmount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>The total approved donation amount.</td></tr>
@@ -1422,34 +1444,34 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">iCardType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>Type of card. See <a class="doc-table-ref" href="#ref-enum-03">Table ENUM-03</a>.</td></tr>
           <tr><td class="field-name">iCurrencyCode</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The currency code.</td></tr>
           <tr><td class="field-name">fsModify</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The current status of the payment record. See <a class="doc-table-ref" href="#ref-enum-01">Table ENUM-01</a>.</td></tr>
-          <tr><td class="field-name">iPaymentType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The Payment Type. See <a class="doc-table-ref" href="#ref-enum-05">Table ENUM-05</a>.</td></tr>
-          <tr><td class="field-name">iCustomerLanguage</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The Customer Language. See <a class="doc-table-ref" href="#ref-enum-06">Table ENUM-06</a>.</td></tr>
-          <tr><td class="field-name">fClosed</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>If the transaction has been completed.</td></tr>
-          <tr><td class="field-name">fBatchError</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>If the batch is error.</td></tr>
-          <tr><td class="field-name">fVoided</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>If the transaction has been voided (Voided).</td></tr>
-          <tr><td class="field-name">fRefunded</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction has been refunded (Refunded).</td></tr>
-          <tr><td class="field-name">fAuthorized</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If payment record was processed to host.</td></tr>
-          <tr><td class="field-name">fSignature</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If it is a signature transaction.</td></tr>
+          <tr><td class="field-name">iPaymentType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The payment type. See <a class="doc-table-ref" href="#ref-enum-05">Table ENUM-05</a>.</td></tr>
+          <tr><td class="field-name">iCustomerLanguage</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The customer language. See <a class="doc-table-ref" href="#ref-enum-06">Table ENUM-06</a>.</td></tr>
+          <tr><td class="field-name">fClosed</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction has been completed.</td></tr>
+          <tr><td class="field-name">fBatchError</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>Whether the batch is in an error state.</td></tr>
+          <tr><td class="field-name">fVoided</td><td class="field-type">short</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction has been voided.</td></tr>
+          <tr><td class="field-name">fRefunded</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction has been refunded.</td></tr>
+          <tr><td class="field-name">fAuthorized</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the payment record has been processed by the host.</td></tr>
+          <tr><td class="field-name">fSignature</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction is a signature transaction.</td></tr>
           <tr><td class="field-name">iCVVStatus</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>CVV status. See <a class="doc-table-ref" href="#ref-enum-13">Table ENUM-13</a>.</td></tr>
           <tr><td class="field-name">iMotoOrderType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>MOTO order type. See <a class="doc-table-ref" href="#ref-enum-14">Table ENUM-14</a>.</td></tr>
-          <tr><td class="field-name">fCanAdjust</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can adjust.</td></tr>
-          <tr><td class="field-name">fCanVoid</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can be voided (Can be voided).</td></tr>
-          <tr><td class="field-name">fCanPreAuthTopUp</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can pre-auth top up.</td></tr>
-          <tr><td class="field-name">fCanPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can preauth complete.</td></tr>
-          <tr><td class="field-name">fCanVoidPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction can void preauth complete.</td></tr>
-          <tr><td class="field-name">fCanGoOffline</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>If the transaction allows for offline stored and forward.</td></tr>
+          <tr><td class="field-name">fCanAdjust</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction can be adjusted.</td></tr>
+          <tr><td class="field-name">fCanVoid</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction can be voided.</td></tr>
+          <tr><td class="field-name">fCanPreAuthTopUp</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether a pre-auth increment can be performed on the transaction.</td></tr>
+          <tr><td class="field-name">fCanPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the pre-auth can be completed.</td></tr>
+          <tr><td class="field-name">fCanVoidPreAuthComplete</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the pre-auth completion can be voided.</td></tr>
+          <tr><td class="field-name">fCanGoOffline</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether the transaction can be processed offline using store-and-forward.</td></tr>
           <tr><td class="field-name">lszCustomerReference</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Customer reference number from the payment record.</td></tr>
           <tr><td class="field-name">lszReferenceNumberKey</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Reference number search key.</td></tr>
           <tr><td class="field-name">lszApprovalCodeKey</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Approval code search key.</td></tr>
           <tr><td class="field-name">lszSequenceNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Sequence number from the payment record.</td></tr>
-          <tr><td class="field-name">Date</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>The Date is used for searching. Formatted as <code>YYYYMMDD</code>.</td></tr>
-          <tr><td class="field-name">Time</td><td class="field-type">string(10)</td><td><span class="badge badge-o">O</span></td><td>The Time is used for searching. Formatted as <code>hh:mm:ss</code>.</td></tr>
+          <tr><td class="field-name">Date</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Date used for searching, formatted as <code>YYYYMMDD</code>.</td></tr>
+          <tr><td class="field-name">Time</td><td class="field-type">string(10)</td><td><span class="badge badge-o">O</span></td><td>Time used for searching, formatted as <code>hh:mm:ss</code>.</td></tr>
           <tr><td class="field-name">AuthorizationExpiryDate</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Authorization expiry date. Formatted as <code>YYYYMMDD</code>.</td></tr>
           <tr><td class="field-name">szAuthorizationResponseCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>The approval response code of the transaction.</td></tr>
           <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The approval code of the transaction.</td></tr>
           <tr><td class="field-name">szReferenceNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Reference number (RRN) from the host.</td></tr>
           <tr><td class="field-name">szTransactionId</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Transaction identifier from the host.</td></tr>
-          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The Systems Trace Audit Number of the transaction.</td></tr>
+          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The System Trace Audit Number of the transaction.</td></tr>
           <tr><td class="field-name">szIssuerId</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Issuer identifier.</td></tr>
           <tr><td class="field-name">szCardHolderName</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Cardholder name.</td></tr>
           <tr><td class="field-name">szStreet</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Cardholder street address (MOTO).</td></tr>
@@ -1457,12 +1479,12 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">szZipCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Cardholder postal code (MOTO).</td></tr>
           <tr><td class="field-name">iReversalReason</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The reason for reversal. See <a class="doc-table-ref" href="#ref-enum-07">Table ENUM-07</a>.</td></tr>
           <tr><td class="field-name">szProcessedLaterNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Processed-later reference number when applicable.</td></tr>
-          <tr><td class="field-name">lszCardLogo</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Card Logo.</td></tr>
-          <tr><td class="field-name">szQRCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The URL address storing the transaction receipt.</td></tr>
-          <tr><td class="field-name">byPinType</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>Pin Type. See <a class="doc-table-ref" href="#ref-enum-08">Table ENUM-08</a>.</td></tr>
-          <tr><td class="field-name">byPinStatus</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>Pin Status. See <a class="doc-table-ref" href="#ref-enum-09">Table ENUM-09</a>.</td></tr>
-          <tr><td class="field-name">iNoCVVOption</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The reason of the no CVV.</td></tr>
-          <tr><td class="field-name">byCDCVM</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>The cvm value of card.</td></tr>
+          <tr><td class="field-name">lszCardLogo</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Card logo.</td></tr>
+          <tr><td class="field-name">szQRCode</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The URL of the stored transaction receipt.</td></tr>
+          <tr><td class="field-name">byPinType</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>PIN type. See <a class="doc-table-ref" href="#ref-enum-08">Table ENUM-08</a>.</td></tr>
+          <tr><td class="field-name">byPinStatus</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>PIN status. See <a class="doc-table-ref" href="#ref-enum-09">Table ENUM-09</a>.</td></tr>
+          <tr><td class="field-name">iNoCVVOption</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The reason no CVV was provided.</td></tr>
+          <tr><td class="field-name">byCDCVM</td><td class="field-type">byte</td><td><span class="badge badge-m">M</span></td><td>The CDCVM (Consumer Device Cardholder Verification Method) value of the card.</td></tr>
           <tr><td class="field-name">iAccountType</td><td class="field-type">uint</td><td><span class="badge badge-m">M</span></td><td>The account type of transaction. See <a class="doc-table-ref" href="#ref-enum-02">Table ENUM-02</a>.</td></tr>
           <tr><td class="field-name">lszEndCardNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The last four digits of the card number used to perform this transaction.</td></tr>
           <tr><td class="field-name">szMaskedCardNumber</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>The card number has been masked.</td></tr>
@@ -1618,11 +1640,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">10</td><td class="field-name">EM_CONTACTLESS_NFC</td></tr>
           <tr><td class="field-name">11</td><td class="field-name">EM_CONTACTLESS_VAS</td></tr>
           <tr><td class="field-name">12</td><td class="field-name">EM_SMC</td></tr>
-          <tr><td class="field-name">13</td><td class="field-name">EM_ALIPAY</td></tr>
-          <tr><td class="field-name">14</td><td class="field-name">EM_WECHAT</td></tr>
           <tr><td class="field-name">15</td><td class="field-name">EM_END</td></tr>
           <tr><td class="field-name">16</td><td class="field-name">EM_ECOMMERCE</td></tr>
-          <tr><td class="field-name">17</td><td class="field-name">EM_CENTRAPAY</td></tr>
           <tr><td class="field-name">18</td><td class="field-name">EM_GIFT_REDEEM</td></tr>
           <tr><td class="field-name">19</td><td class="field-name">EM_DIRECTPAY</td></tr>
         </tbody></table>
@@ -1654,7 +1673,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">zh_CN</td><td>Chinese (PRC)</td><td>3</td></tr>
           <tr><td class="field-name">zh_TW</td><td>Chinese (Taiwan)</td><td>4</td></tr>
           <tr><td class="field-name">cs_CZ</td><td>Czech (Czech Republic)</td><td>5</td></tr>
-          <tr><td class="field-name">nl_BE</td><td>Dutch (Netherlands)</td><td>6</td></tr>
+          <tr><td class="field-name">nl_BE</td><td>Dutch (Belgium)</td><td>6</td></tr>
           <tr><td class="field-name">en_AU</td><td>English (Australia)</td><td>7</td></tr>
           <tr><td class="field-name">en_GB</td><td>English (Britain)</td><td>8</td></tr>
           <tr><td class="field-name">en_CA</td><td>English (Canada)</td><td>9</td></tr>
@@ -1691,9 +1710,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">in_ID</td><td>Indonesian (Indonesia)</td><td>40</td></tr>
           <tr><td class="field-name">lt_LT</td><td>Lithuanian (Lithuania)</td><td>41</td></tr>
           <tr><td class="field-name">lv_LV</td><td>Latvian (Latvia)</td><td>42</td></tr>
-          <tr><td class="field-name">nb_NO</td><td>Norwegian-Bokmol (Norway)</td><td>43</td></tr>
+          <tr><td class="field-name">nb_NO</td><td>Norwegian Bokmål (Norway)</td><td>43</td></tr>
           <tr><td class="field-name">pt_BR</td><td>Portuguese (Brazil)</td><td>44</td></tr>
-          <tr><td class="field-name">sr_RS</td><td>Serbian (Cyrillic,Serbia)</td><td>45</td></tr>
+          <tr><td class="field-name">sr_RS</td><td>Serbian (Cyrillic, Serbia)</td><td>45</td></tr>
           <tr><td class="field-name">sk_SK</td><td>Slovak (Slovakia)</td><td>46</td></tr>
           <tr><td class="field-name">sl_SI</td><td>Slovenian (Slovenia)</td><td>47</td></tr>
           <tr><td class="field-name">es_US</td><td>Spanish (US)</td><td>48</td></tr>
@@ -1769,12 +1788,12 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <pre><code class="language-json">{
   "Merchant": "01",
   "TxnType": "P",
-  "EnableTip": 1,
+  "EnableTip": true,
   "AmtTip": 100,
   "Amount": 200,
   "TxnRef": "12345567890",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -1790,7 +1809,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     "Transaction": {
       "Merchant": "1",
       "TxnType": "P",
-      "Success": "1",
+      "Success": true,
       "IdShift": 1,
       "IdShiftName": 0,
       "lAmount": 100,
@@ -1818,7 +1837,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Response": {
     "Transaction": {
       "TxnType": "P",
-      "Success": "0",
+      "Success": false,
       "ResponseText": "Transaction Cancelled",
       "lAmount": 0,
       "lAuthorizedTotal": 0,
@@ -1837,7 +1856,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="purchase">
     <div class="middle-col">
       <h3 class="subsection-title">Purchase <span class="txn-type-badge">TxnType: <code>P</code></span></h3>
-      <div class="section-desc"><p>The purchase transaction type allows the merchant to perform a sale, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The purchase transaction type allows the merchant to perform a sale. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1845,8 +1864,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <tbody>
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"P"</code> (Purchase).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Amount of sale in cents. Must be greater than 0.</td></tr>
-          <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Indicates could Tip or not. Default <code>'0'</code> (Disabled Tip). See <a class="doc-table-ref" href="#transaction">EnableTip notes</a>.</td></tr>
-          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>AmtTip of the sale in cents.</td></tr>
+          <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether tip entry is enabled. Default <code>false</code> (tip disabled). See <a class="doc-table-ref" href="#transaction">EnableTip notes</a>.</td></tr>
+          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1856,12 +1875,12 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <pre><code class="language-json">{
   "Merchant": "01",
   "TxnType": "P",
-  "EnableTip": 1,
+  "EnableTip": true,
   "AmtTip": 100,
   "Amount": 200,
   "TxnRef": "12345567890",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -1872,7 +1891,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="refund">
     <div class="middle-col">
       <h3 class="subsection-title">Refund <span class="txn-type-badge">TxnType: <code>R</code></span></h3>
-      <div class="section-desc"><p>A refund transaction type allows the merchant to refund a sale, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The refund transaction type allows the merchant to refund a sale. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1880,7 +1899,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <tbody>
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"R"</code> (Refund).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Refund amount in cents. Must be greater than 0.</td></tr>
-          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it for refund.</td></tr>
+          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it for refund. See <a class="doc-table-ref" href="#accesscode-notes">AccessCode behavior</a>.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1893,8 +1912,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Amount": 1000,
   "TxnRef": "{{txnRef}}",
   "AccessCode": "0000",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -1905,7 +1924,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="void">
     <div class="middle-col">
       <h3 class="subsection-title">Void <span class="txn-type-badge">TxnType: <code>V</code></span></h3>
-      <div class="section-desc"><p>Voids an approved transaction. Uses <code>POST .../transaction</code> with <code>TxnType: "V"</code>. Amount is not required — the terminal voids the full original amount. Requires <code>lszApprovalCode</code> and <code>lszSTAN</code> from the original transaction (same pattern as Cancel Pre-Auth).</p></div>
+      <div class="section-desc"><p>Voids an approved transaction. Uses <code>POST .../transaction</code> with <code>TxnType: "V"</code>. Amount is not required — the terminal voids the full original amount. Requires <code>lszApprovalCode</code> and <code>lszSTAN</code> from the original transaction (same pattern as Cancel Pre-auth).</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1934,8 +1953,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "TxnType": "V",
   "lszApprovalCode": "327710",
   "lszSTAN": "000018",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -1946,7 +1965,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="cashout">
     <div class="middle-col">
       <h3 class="subsection-title">Cash Out <span class="txn-type-badge">TxnType: <code>C</code></span></h3>
-      <div class="section-desc"><p>The cash-out transaction type allows the merchant to perform a cash-out transaction, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The cash-out transaction type allows the merchant to perform a cash-out transaction. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses the applicable <a class="doc-table-ref" href="#transaction">common request fields</a>. For Cash Out, send the cash amount in <code>AmtCash</code> instead of the common <code>Amount</code> field. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1965,8 +1984,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "TxnType": "C",
   "AmtCash": 10000,
   "TxnRef": "{{txnRef}}",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -1977,7 +1996,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="purchasecash">
     <div class="middle-col">
       <h3 class="subsection-title">Purchase &amp; Cash <span class="txn-type-badge">TxnType: <code>PC</code></span></h3>
-      <div class="section-desc"><p>The purchase &amp; cash transaction type allows the merchant to perform a sale and also withdraw cash, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The purchase &amp; cash transaction type allows the merchant to perform a sale and also withdraw cash. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -1998,8 +2017,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Amount": 1000,
   "AmtCash": 2000,
   "TxnRef": "{{txnRef}}",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -2010,7 +2029,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="motopurchase">
     <div class="middle-col">
       <h3 class="subsection-title">MOTO Purchase <span class="txn-type-badge">TxnType: <code>MP</code></span></h3>
-      <div class="section-desc"><p>The moto purchase transaction type allows the merchant to perform a sale with a manually entered transaction that has been generated from a mail order or a telephone order, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The MOTO purchase transaction type allows the merchant to perform a sale with a manually entered transaction that has been generated from a mail order or a telephone order. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2019,7 +2038,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"MP"</code> (MOTO Purchase).</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Amount in cents. Must be greater than 0.</td></tr>
           <tr><td class="field-name">EnableTip</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether tip entry is offered. Default disabled.</td></tr>
-          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>AmtTip of the sale in cents.</td></tr>
+          <tr><td class="field-name">AmtTip</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Tip amount of the sale in cents.</td></tr>
           <tr><td class="field-name">Pan</td><td class="field-type">string(20)</td><td><span class="badge badge-o">O</span></td><td>Card number. If omitted, operator enters on terminal.</td></tr>
           <tr><td class="field-name">DateExpiry</td><td class="field-type">string(4)</td><td><span class="badge badge-o">O</span></td><td>Card expiry in <code>MMYY</code> format.</td></tr>
           <tr><td class="field-name">CVV</td><td class="field-type">string(4)</td><td><span class="badge badge-o">O</span></td><td>Card CVV/CVC.</td></tr>
@@ -2034,15 +2053,15 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Merchant": "01",
   "TxnType": "MP",
   "TxnRef": "{{txnRef}}",
-  "EnableTip": 1,
+  "EnableTip": true,
   "AmtTip": 200,
   "Amount": 2000,
   "Pan": "6367172100001111",
   "DateExpiry": "1249",
   "CVV": "120",
   "CardName": "Paymark Test",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -2053,7 +2072,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="motorefund">
     <div class="middle-col">
       <h3 class="subsection-title">MOTO Refund <span class="txn-type-badge">TxnType: <code>MR</code></span></h3>
-      <div class="section-desc"><p>A moto refund transaction type allows the merchant to refund a sale with a manually entered transaction, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The MOTO refund transaction type allows the merchant to refund a sale with a manually entered transaction. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2072,15 +2091,51 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div class="code-block-wrap">
         <div class="code-block-label">Request Example — MOTO Refund</div>
         <pre><code class="language-json">{
-  "Merchant": "00",
+  "Merchant": "01",
   "TxnType": "MR",
   "Amount": 100,
   "TxnRef": "{{txnRef}}",
   "Pan": "6367172100001111",
   "DateExpiry": "1249",
   "CardName": "Paymark Test",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
+  "ReceiptType": 1
+}</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!--  TXN SUB: Balance Enquiry  -->
+  <div class="section-container txn-subsection" id="balanceenquiry">
+    <div class="middle-col">
+      <h3 class="subsection-title">Balance Enquiry <span class="txn-type-badge">TxnType: <code>BE</code></span></h3>
+      <div class="section-desc"><p>Balance Enquiry asks the host for the balance of the account linked to the card presented on the terminal. No amount is charged. It uses the transaction request format.</p></div>
+      <p class="txn-common-ref">Also uses the applicable <a class="doc-table-ref" href="#transaction">common request fields</a>. Do not send <code>Amount</code> or <code>AmtCash</code>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>; the balances are returned in <code>lBalance</code> and <code>lLedgerBalance</code>.</p>
+      <div class="table-label">Type-Specific Request Fields</div>
+      <table class="field-table">
+        <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"BE"</code> (Balance Enquiry).</td></tr>
+        </tbody>
+      </table>
+      <div class="info-card" style="margin-top:14px;">
+        <h4>Availability</h4>
+        <ul>
+          <li>Use <a class="doc-table-ref" href="#getallowedtransactions">Get Allowed Transactions</a> to check whether Balance Enquiry is enabled for the merchant.</li>
+          <li>If Balance Enquiry is disabled on the terminal, the request is rejected with HTTP 403 (feature not supported).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="right-col">
+      <div class="code-block-wrap">
+        <div class="code-block-label">Request Example — Balance Enquiry</div>
+        <pre><code class="language-json">{
+  "Merchant": "01",
+  "TxnType": "BE",
+  "TxnRef": "{{txnRef}}",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -2102,16 +2157,13 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <tbody>
           <tr><td>1</td><td class="flow-txn">PA</td><td>Authorize — reserve funds on the card.</td><td>—</td></tr>
           <tr><td>2a</td><td class="flow-txn">AC</td><td>Complete — capture the final amount.</td><td>Original <code>PA</code> (<code>FuncType: PreAuth</code>)</td></tr>
-          <tr><td>2b</td><td class="flow-txn">PAC</td><td>Cancel Pre-Auth — release the reserved funds.</td><td>Original <code>PA</code> (<code>FuncType: PreAuth</code>)</td></tr>
-          <tr><td>2c</td><td class="flow-txn">PT</td><td>Incremental Pre-Auth — increase the reserved amount.</td><td>Original <code>PA</code> (<code>FuncType: PreAuth</code>)</td></tr>
-          <tr><td>2d</td><td class="flow-txn">PP</td><td>Partial — capture part of the reserved amount.</td><td>Original <code>PA</code> (<code>FuncType: PreAuth</code>)</td></tr>
-          <tr><td>2e</td><td class="flow-txn">PR</td><td>Pre-Auth Reversal — reverse an open pre-auth.</td><td>Original <code>PA</code> (<code>FuncType: PreAuth</code>)</td></tr>
+          <tr><td>2b</td><td class="flow-txn">PR</td><td>Pre-auth Reversal — reverse an open pre-auth.</td><td>Original <code>PA</code> (<code>FuncType: PreAuth</code>)</td></tr>
         </tbody>
       </table>
       <div class="overview-grid">
         <div class="info-card">
           <h4>Linking follow-up requests</h4>
-          <p>Follow-up types (<code>AC</code>, <code>PAC</code>, <code>PT</code>, <code>PP</code>, <code>PR</code>) require <code>lszApprovalCode</code> and <code>lszSTAN</code> in the request. Two ways to obtain them:</p>
+          <p>Follow-up types (<code>AC</code>, <code>PR</code>) require <code>lszApprovalCode</code> and <code>lszSTAN</code> in the request. Two ways to obtain them:</p>
           <ul>
             <li><strong>Option 1 — Search Transaction:</strong> Call <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a> with the correct <code>FuncType</code>, pick a record from <code>Response.Transactions[]</code>, and copy <code>lszApprovalCode</code> / <code>lszSTAN</code>.</li>
             <li><strong>Option 2 — POS-managed:</strong> Store AuthCode and STAN from the original transaction response in your POS database and pass them in the follow-up request.</li>
@@ -2121,8 +2173,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <h4>Search Transaction ↔ Pre-auth</h4>
           <p>Use <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a> to list approved records on the terminal before performing a follow-up:</p>
           <ul>
-            <li><code>FuncType: "PreAuth"</code> — find original pre-auths for Complete, Cancel Pre-Auth, Incremental Pre-Auth, Partial, Pre-Auth Reversal, or Pre-Auth Inquiry.</li>
-            <li><code>FuncType: "PreAuthComplete"</code> — Pre-Auth Complete Inquiry search.</li>
+            <li><code>FuncType: "PreAuth"</code> — find original pre-auths for Complete, Pre-auth Reversal, or Pre-auth Inquiry.</li>
+            <li><code>FuncType: "PreAuthComplete"</code> — Pre-auth Complete Inquiry search.</li>
           </ul>
           <p style="margin-top:8px;">Search filters are optional, including <code>FuncType</code>.</p>
         </div>
@@ -2134,7 +2186,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <div class="section-container txn-subsection" id="preauth">
     <div class="middle-col">
       <h3 class="subsection-title">Pre-auth <span class="txn-type-badge">TxnType: <code>PA</code></span></h3>
-      <div class="section-desc"><p>A pre-auth transaction type allows the merchant to pre-auth a sale, it uses the transaction request format.</p></div>
+      <div class="section-desc"><p>The pre-auth transaction type allows the merchant to pre-authorize a sale. It uses the transaction request format.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
@@ -2146,7 +2198,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       </table>
       <div class="info-card" style="margin-top:14px;">
         <h4>After approval</h4>
-        <p>Save <code>lszApprovalCode</code> and <code>lszSTAN</code> from <code>Response.Transaction</code>. You need them for Complete, Cancel, Top Up, or Partial — either stored in your POS (Option 2) or retrieved later via <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a> with <code>FuncType: "PreAuth"</code> (Option 1). See <a class="doc-table-ref" href="#preauth-family">Pre-auth Guide</a>.</p>
+        <p>Save <code>lszApprovalCode</code> and <code>lszSTAN</code> from <code>Response.Transaction</code>. You need them for Complete or Pre-auth Reversal — either stored in your POS (Option 2) or retrieved later via <a class="doc-table-ref" href="#searchtransaction">Search Transaction</a> with <code>FuncType: "PreAuth"</code> (Option 1). See <a class="doc-table-ref" href="#preauth-family">Pre-auth Guide</a>.</p>
       </div>
     </div>
     <div class="right-col">
@@ -2157,8 +2209,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "TxnType": "PA",
   "Amount": 1500,
   "TxnRef": "123415890",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
@@ -2198,146 +2250,25 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "Amount": 100,
   "lszApprovalCode": "328958",
   "lszSTAN": "000030",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
+  "AsyncMode": false,
+  "WithReceiptImageData": true,
   "ReceiptType": 1
 }</code></pre>
       </div>
     </div>
   </div>
 
-  <!--  TXN SUB: Cancel Pre-Auth  -->
-  <div class="section-container txn-subsection" id="preauthcancel">
-    <div class="middle-col">
-      <h3 class="subsection-title">Cancel Pre-Auth <span class="txn-type-badge">TxnType: <code>PAC</code></span></h3>
-      <div class="section-desc"><p>Cancel Pre-Auth releases the reserved funds from an open pre-auth.</p></div>
-      <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
-      <div class="table-label">Type-Specific Request Fields</div>
-      <table class="field-table">
-        <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PAC"</code> (Cancel Pre-Auth).</td></tr>
-          <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Approval code from the original Pre-auth. See linking options below.</td></tr>
-          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>STAN from the original Pre-auth. Search with <code>FuncType: "PreAuth"</code> or use stored <code>PA</code> response values.</td></tr>
-        </tbody>
-      </table>
-      <div class="info-card" style="margin-top:14px;">
-        <h4>Linking to the original pre-auth</h4>
-        <ul>
-          <li><strong>Option 1:</strong> Search with <code>FuncType: "PreAuth"</code>, select a record, use its <code>lszApprovalCode</code> and <code>lszSTAN</code>.</li>
-          <li><strong>Option 2:</strong> Pass AuthCode and STAN saved from the original <code>PA</code> response.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="right-col">
-      <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — Cancel Pre-Auth</div>
-        <pre><code class="language-json">{
-  "Merchant": "01",
-  "TxnType": "PAC",
-  "lszApprovalCode": "328958",
-  "lszSTAN": "000030",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
-  "ReceiptType": 1
-}</code></pre>
-      </div>
-    </div>
-  </div>
-
-  <!--  TXN SUB: Incremental Pre-Auth  -->
-  <div class="section-container txn-subsection" id="preauthtopup">
-    <div class="middle-col">
-      <h3 class="subsection-title">Incremental Pre-Auth <span class="txn-type-badge">TxnType: <code>PT</code></span></h3>
-      <div class="section-desc"><p>An Incremental Pre-Auth increases the reserved amount of an open pre-auth by adding a new amount to the previous authorization.</p></div>
-      <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
-      <div class="table-label">Type-Specific Request Fields</div>
-      <table class="field-table">
-        <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PT"</code> (Incremental Pre-Auth).</td></tr>
-          <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Additional amount in cents. Must be greater than 0.</td></tr>
-          <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Approval code from the original Pre-auth.</td></tr>
-          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>STAN from the original Pre-auth. Search with <code>FuncType: "PreAuth"</code> or use stored <code>PA</code> response values.</td></tr>
-        </tbody>
-      </table>
-      <div class="info-card" style="margin-top:14px;">
-        <h4>Linking to the original pre-auth</h4>
-        <ul>
-          <li><strong>Option 1:</strong> Search with <code>FuncType: "PreAuth"</code>, select a record, use its <code>lszApprovalCode</code> and <code>lszSTAN</code>.</li>
-          <li><strong>Option 2:</strong> Pass AuthCode and STAN saved from the original <code>PA</code> response.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="right-col">
-      <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — Incremental Pre-Auth</div>
-        <pre><code class="language-json">{
-  "Merchant": "01",
-  "TxnType": "PT",
-  "Amount": 100,
-  "lszApprovalCode": "328958",
-  "lszSTAN": "000030",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
-  "ReceiptType": 1
-}</code></pre>
-      </div>
-    </div>
-  </div>
-
-  <!--  TXN SUB: Pre-auth Partial  -->
-  <div class="section-container txn-subsection" id="preauthpartial">
-    <div class="middle-col">
-      <h3 class="subsection-title">Pre-auth Partial <span class="txn-type-badge">TxnType: <code>PP</code></span></h3>
-      <div class="section-desc"><p>A preauth partial transaction type allows the merchant to make a partial payment towards the previous preauth.</p></div>
-      <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
-      <div class="table-label">Type-Specific Request Fields</div>
-      <table class="field-table">
-        <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PP"</code> (Pre-auth Partial).</td></tr>
-          <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Partial amount in cents. Must be greater than 0.</td></tr>
-          <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Approval code from the original Pre-auth.</td></tr>
-          <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>STAN from the original Pre-auth. Search with <code>FuncType: "PreAuth"</code> or use stored <code>PA</code> response values.</td></tr>
-        </tbody>
-      </table>
-      <div class="info-card" style="margin-top:14px;">
-        <h4>Linking to the original pre-auth</h4>
-        <ul>
-          <li><strong>Option 1:</strong> Search with <code>FuncType: "PreAuth"</code>, select a record, use its <code>lszApprovalCode</code> and <code>lszSTAN</code>.</li>
-          <li><strong>Option 2:</strong> Pass AuthCode and STAN saved from the original <code>PA</code> response.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="right-col">
-      <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — Pre-auth Partial</div>
-        <pre><code class="language-json">{
-  "Merchant": "01",
-  "TxnType": "PP",
-  "Amount": 100,
-  "lszApprovalCode": "328958",
-  "lszSTAN": "000030",
-  "AsyncMode": "0",
-  "WithReceiptImageData": "1",
-  "ReceiptType": 1
-}</code></pre>
-      </div>
-    </div>
-  </div>
-
-      <!--  TXN SUB: Pre-Auth Reversal  -->
+  <!--  TXN SUB: Pre-auth Reversal  -->
   <div class="section-container txn-subsection" id="preauthreversal">
     <div class="middle-col">
-      <h3 class="subsection-title">Pre-Auth Reversal <span class="txn-type-badge">TxnType: <code>PR</code></span></h3>
-      <div class="section-desc"><p>Pre-Auth Reversal reverses an open pre-auth. Uses <code>POST .../transaction</code> with <code>TxnType: "PR"</code>.</p></div>
+      <h3 class="subsection-title">Pre-auth Reversal <span class="txn-type-badge">TxnType: <code>PR</code></span></h3>
+      <div class="section-desc"><p>Pre-auth Reversal reverses an open pre-auth. Uses <code>POST .../transaction</code> with <code>TxnType: "PR"</code>.</p></div>
       <p class="txn-common-ref">Also uses all <a class="doc-table-ref" href="#transaction">common request fields</a>. Response structure is defined in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>.</p>
       <div class="table-label">Type-Specific Request Fields</div>
       <table class="field-table">
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PR"</code> (Pre-Auth Reversal).</td></tr>
+          <tr><td class="field-name">TxnType</td><td class="field-type">string(3)</td><td><span class="badge badge-m">M</span></td><td>Must be <code>"PR"</code> (Pre-auth Reversal).</td></tr>
           <tr><td class="field-name">lszApprovalCode</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Approval code from the original Pre-auth (<code>PA</code>).</td></tr>
           <tr><td class="field-name">lszSTAN</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>STAN from the original Pre-auth. Search with <code>FuncType: "PreAuth"</code> or use stored <code>PA</code> response values.</td></tr>
         </tbody>
@@ -2352,13 +2283,13 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     </div>
     <div class="right-col">
       <div class="code-block-wrap">
-        <div class="code-block-label">Request Example — Pre-Auth Reversal</div>
+        <div class="code-block-label">Request Example — Pre-auth Reversal</div>
         <pre><code class="language-json">{
   "Merchant": "01",
   "TxnType": "PR",
   "lszApprovalCode": "328958",
   "lszSTAN": "000030",
-  "AsyncMode": "0"
+  "AsyncMode": false
 }</code></pre>
       </div>
     </div>
@@ -2370,7 +2301,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="middle-col">
       <h2 class="section-title">Search Transaction</h2>
       <div class="section-desc">
-        <p>This request searches for <strong>approved transactions stored on the terminal</strong> for different purposes — most commonly to find a pre-auth record before performing Complete, Cancel, Top Up, Partial, or Reversal. See <a class="doc-table-ref" href="#preauth-family">Pre-auth Guide</a> for how search fits into the pre-auth flow.</p>
+        <p>This request searches for <strong>approved transactions stored on the terminal</strong> for different purposes — most commonly to find a pre-auth record before performing Complete or Pre-auth Reversal. See <a class="doc-table-ref" href="#preauth-family">Pre-auth Guide</a> for how search fits into the pre-auth flow.</p>
         <p>All search filter fields are optional and may be left empty, including <code>FuncType</code>, <code>AuthCode</code>, and <code>Stan</code>.</p>
       </div>
       <div class="table-label">Request Body Fields</div>
@@ -2384,18 +2315,18 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">RRN</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Filter by Retrieval Reference Number.</td></tr>
           <tr><td class="field-name">Date</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Filter by transaction date. Format <code>YYYYMMDD</code>.</td></tr>
           <tr><td class="field-name">Time</td><td class="field-type">string(10)</td><td><span class="badge badge-o">O</span></td><td>Filter by transaction time. Format <code>hh:mm:ss</code>.</td></tr>
-          <tr><td class="field-name">Stan</td><td class="field-type">string(6)</td><td><span class="badge badge-o">O</span></td><td>Filter by STAN (Systems Trace Audit Number).</td></tr>
+          <tr><td class="field-name">Stan</td><td class="field-type">string(6)</td><td><span class="badge badge-o">O</span></td><td>Filter by STAN (System Trace Audit Number).</td></tr>
           <tr><td class="field-name">Last4Digits</td><td class="field-type">string(4)</td><td><span class="badge badge-o">O</span></td><td>Filter by last four digits of the card number.</td></tr>
           <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-o">O</span></td><td>Filter by approved amount in cents.</td></tr>
           <tr><td class="field-name">ExAmount</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Amount matching mode when filtering by <code>Amount</code>. True = exact match; false = same-dollar range match. See note below.</td></tr>
         </tbody>
       </table>
       <div class="info-card" style="margin-top:14px;">
-        <h4>ExAmount behaviour</h4>
+        <h4>ExAmount behavior</h4>
         <p>If the amount you want to search is <strong>1050</strong> (i.e. $10.50):</p>
         <ul>
-          <li><code>ExAmount: "0"</code> — returns approved transactions with amounts from <strong>1000 to 1099</strong> (same dollar range).</li>
-          <li><code>ExAmount: "1"</code> — returns only transactions with amount exactly <strong>1050</strong>.</li>
+          <li><code>ExAmount: false</code> — returns approved transactions with amounts from <strong>1000 to 1099</strong> (same dollar range).</li>
+          <li><code>ExAmount: true</code> — returns only transactions with amount exactly <strong>1050</strong>.</li>
         </ul>
       </div>
       <div id="ref-enum-11" class="ref-table-anchor" style="margin-top:20px;">
@@ -2406,12 +2337,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <thead><tr><th>FuncType</th><th>Used to search for the below transactions</th></tr></thead>
           <tbody>
             <tr><td class="field-name">PreAuth</td><td>Pre-auth Complete Transaction.</td></tr>
-            <tr><td class="field-name">PreAuth</td><td>Cancel Pre-Auth Transaction.</td></tr>
-            <tr><td class="field-name">PreAuth</td><td>Incremental Pre-Auth Transaction.</td></tr>
-            <tr><td class="field-name">PreAuth</td><td>Pre-auth Partial Transaction.</td></tr>
-            <tr><td class="field-name">PreAuth</td><td>Pre-Auth Reversal Transaction.</td></tr>
-            <tr><td class="field-name">PreAuth</td><td>Pre-Auth Inquiry.</td></tr>
-            <tr><td class="field-name">PreAuthComplete</td><td>Pre-Auth Complete Inquiry.</td></tr>
+            <tr><td class="field-name">PreAuth</td><td>Pre-auth Reversal Transaction.</td></tr>
+            <tr><td class="field-name">PreAuth</td><td>Pre-auth Inquiry.</td></tr>
+            <tr><td class="field-name">PreAuthComplete</td><td>Pre-auth Complete Inquiry.</td></tr>
             <tr><td class="field-name">Reprint</td><td>Reprint Transaction.</td></tr>
           </tbody>
         </table>
@@ -2438,7 +2366,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">Transactions</td><td class="field-type">array</td><td><span class="badge badge-m">M</span></td><td>Array of transaction objects. Each item uses the <a class="doc-table-ref" href="#transaction-response">Transaction Response</a> field model. May contain 0, 1, or many records.</td></tr>
         </tbody>
       </table>
-      <p class="txn-common-ref" style="margin-top:12px;">Do not duplicate-parse a separate schema — treat every <code>Transactions[n]</code> entry as a standard transaction response body (minus the outer <code>SessionId</code> / <code>ResponseType</code> wrapper). Enum values for response fields are in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a> → Reference — Field Enums (Tables 12.5.2–12.5.6).</p>
+      <p class="txn-common-ref" style="margin-top:12px;">Do not duplicate-parse a separate schema — treat every <code>Transactions[n]</code> entry as a standard transaction response body (minus the outer <code>SessionId</code> / <code>ResponseType</code> wrapper). Enum values for response fields are in <a class="doc-table-ref" href="#transaction-response">Transaction Response</a> → <a class="doc-table-ref" href="#transaction-field-enums">Field Enums</a>.</p>
     </div>
     <div class="right-col">
       <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transactionsearch</div></div>
@@ -2458,7 +2386,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       {
         "Merchant": "1",
         "TxnType": "PA",
-        "Success": "1",
+        "Success": true,
         "lAmount": 1500,
         "lAuthorizedTotal": 1500,
         "Date": "20240405",
@@ -2471,7 +2399,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       {
         "Merchant": "1",
         "TxnType": "PA",
-        "Success": "1",
+        "Success": true,
         "lAmount": 2000,
         "lAuthorizedTotal": 2000,
         "Date": "20240406",
@@ -2488,119 +2416,6 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     </div>
   </div>
 
-  <!--  APM TRANSACTION  -->
-  <div class="section-container" id="apmtransaction">
-    <div class="middle-col">
-      <h2 class="section-title">APM Transaction</h2>
-      <div class="section-desc">
-        <p>Alternative payment methods (Alipay, WeChat Pay, CentraPay) use the <strong>same</strong> <code>POST .../transaction</code> endpoint as card transactions. Set an APM-specific <code>TxnType</code> (below). Refunds require <code>TxnRef</code>; Alipay/WeChat refunds also require <code>OriginalAmount</code>.</p>
-        <p>The <strong>response</strong> uses the same model as card transactions — see <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>. <code>ResponseType</code> is always <code>"transaction"</code>.</p>
-      </div>
-      <div class="table-label">APM request fields</div>
-      <table class="field-table">
-        <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Specify the merchant. See <a class="doc-table-ref" href="#ref-req-01">Table REQ-01</a>.</td></tr>
-          <tr><td class="field-name">TxnType</td><td class="field-type">string(9)</td><td><span class="badge badge-m">M</span></td><td>APM transaction type — see table below (not the card <code>P</code>/<code>R</code> codes).</td></tr>
-          <tr><td class="field-name">Amount</td><td class="field-type">long</td><td><span class="badge badge-m">M</span></td><td>Transaction amount in cents. Must be greater than 0 for purchase types.</td></tr>
-          <tr><td class="field-name">OriginalAmount</td><td class="field-type">long</td><td><span class="badge badge-c">C</span></td><td>Original purchase amount in cents. <strong>Mandatory</strong> for <code>ALIREF</code> and <code>WEREF</code>. Not used for <code>QRREF</code>.</td></tr>
-          <tr><td class="field-name">TxnRef</td><td class="field-type">string(64)</td><td><span class="badge badge-c">C</span></td><td>Reference number on the receipt. <strong>Mandatory</strong> for <code>ALIREF</code>, <code>WEREF</code>, and <code>QRREF</code>.</td></tr>
-          <tr><td class="field-name">AsyncMode</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Default disabled. Enable async mode — see <a class="doc-table-ref" href="#overview-syncasync">Sync vs Async</a>.</td></tr>
-          <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, response includes <code>ReceiptData</code> and <code>DigitalSig</code>.</td></tr>
-          <tr><td class="field-name">DisablePrinting</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, disable receipt printing for this transaction.</td></tr>
-          <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
-          <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when <code>ReceiptType</code> is plain text.</td></tr>
-        </tbody>
-      </table>
-      <div class="table-label" style="margin-top:20px;">TxnType values (APM)</div>
-      <table class="field-table">
-        <thead><tr><th>TxnType</th><th>Operation</th></tr></thead>
-        <tbody>
-          <tr><td class="field-name">ALIPUR</td><td>Alipay purchase</td></tr>
-          <tr><td class="field-name">WEPUR</td><td>WeChat Pay purchase</td></tr>
-          <tr><td class="field-name">QRPUR</td><td>CentraPay purchase</td></tr>
-          <tr><td class="field-name">ALIREF</td><td>Alipay refund</td></tr>
-          <tr><td class="field-name">WEREF</td><td>WeChat Pay refund</td></tr>
-          <tr><td class="field-name">QRREF</td><td>CentraPay refund</td></tr>
-        </tbody>
-      </table>
-      <p class="txn-common-ref" style="margin-top:14px;">Response fields — same as <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>. Poll with <a class="doc-table-ref" href="#querytransaction">Query Transaction</a> when <code>AsyncMode</code> is enabled.</p>
-    </div>
-    <div class="right-col">
-      <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transaction</div></div>
-      <div class="code-block-wrap">
-        <div class="code-tabs">
-          <div class="code-tab active" onclick="switchTab(this,'apm-req')">CentraPay purchase</div>
-          <div class="code-tab" onclick="switchTab(this,'apm-req')">Alipay refund</div>
-        </div>
-        <div class="code-panel active" id="apm-req-0"><pre><code class="language-json">{
-  "Merchant": "01",
-  "TxnType": "QRPUR",
-  "Amount": 1500,
-  "TxnRef": "APM-001",
-  "AsyncMode": false,
-  "WithReceiptImageData": true,
-  "ReceiptType": 1
-}</code></pre></div>
-        <div class="code-panel" id="apm-req-1"><pre><code class="language-json">{
-  "Merchant": "01",
-  "TxnType": "ALIREF",
-  "Amount": 1500,
-  "OriginalAmount": 1500,
-  "TxnRef": "APM-001",
-  "AsyncMode": false,
-  "WithReceiptImageData": true,
-  "ReceiptType": 1
-}</code></pre></div>
-      </div>
-      <div class="code-block-wrap">
-        <div class="code-tabs">
-          <div class="code-tab active" onclick="switchTab(this,'apm-resp')">Approved</div>
-          <div class="code-tab" onclick="switchTab(this,'apm-resp')">Declined</div>
-        </div>
-        <div class="code-panel active" id="apm-resp-0"><pre><code class="language-json">{
-  "SessionId": "{{sessionId}}",
-  "ResponseType": "transaction",
-  "Response": {
-    "Transaction": {
-      "Merchant": "1",
-      "TxnType": "QRPUR",
-      "Success": true,
-      "IdShift": 1,
-      "IdShiftName": 0,
-      "lAmount": 1500,
-      "lTipAmount": 0,
-      "lCashOut": 0,
-      "lAuthorizedTotal": 1500,
-      "iEntryMode": 17,
-      "szAuthorizationResponseCode": "00",
-      "lszApprovalCode": "327710",
-      "lszSTAN": "000018",
-      "PID": 8,
-      "Date": "20240404",
-      "Time": "15:14:02",
-      "ReceiptType": 1
-    }
-  }
-}</code></pre></div>
-        <div class="code-panel" id="apm-resp-1"><pre><code class="language-json">{
-  "SessionId": "{{sessionId}}",
-  "ResponseType": "transaction",
-  "Response": {
-    "Transaction": {
-      "TxnType": "QRPUR",
-      "Success": false,
-      "ResponseText": "Transaction Cancelled",
-      "lAmount": 0,
-      "lAuthorizedTotal": 0,
-      "ReceiptType": 1
-    }
-  }
-}</code></pre></div>
-      </div>
-    </div>
-  </div>
-
   <!--  REPRINT  -->
   <div class="section-container" id="reprint">
     <div class="middle-col">
@@ -2613,7 +2428,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Merchant to execute the reprint. See <a class="doc-table-ref" href="#ref-req-01">Table REQ-01</a>.</td></tr>
-          <tr><td class="field-name">RRN</td><td class="field-type">string(6)</td><td><span class="badge badge-m">M</span></td><td>Last 6 digits of the transaction Retrieval Reference Number. The terminal searches for a stored receipt whose reference number ends with these digits.</td></tr>
+          <tr><td class="field-name">RRN</td><td class="field-type">string(12)</td><td><span class="badge badge-m">M</span></td><td>Retrieval Reference Number of the original transaction: the full RRN or its last digits. The terminal searches for a stored receipt whose reference number ends with this value.</td></tr>
           <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, include <code>ReceiptData</code> and <code>ReceiptLogo</code> in the response.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
           <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when <code>ReceiptType</code> is plain text.</td></tr>
@@ -2623,9 +2438,11 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div class="info-card" style="margin-top:14px;">
         <h4>RRN lookup</h4>
         <ul>
-          <li>Send exactly the <strong>last 6 digits</strong> of the RRN returned for the original transaction.</li>
+          <li>Send the RRN returned for the original transaction (up to 12 characters). Sending the full RRN avoids matching another receipt that ends with the same digits.</li>
           <li>If more than one stored receipt matches, the most recent matching receipt is reprinted.</li>
-          <li>A missing or shorter RRN returns an invalid-RRN error; no match returns an RRN-not-found error.</li>
+          <li>A missing <code>RRN</code> returns HTTP 400 with <code>ErrMessage</code> <code>"Invalid Request Data"</code>.</li>
+          <li>If no stored receipt matches, the response has <code>Success: false</code> and <code>ResponseText</code> <code>"Rrn Not Found"</code>.</li>
+          <li>If printing fails, the response has <code>Success: false</code> and <code>ResponseText</code> contains the printer error message. If the terminal times out, <code>ResponseText</code> is <code>"Time Outs"</code>.</li>
         </ul>
       </div>
       <div class="table-label" style="margin-top:20px;">Response Fields</div>
@@ -2711,7 +2528,8 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div class="code-block-wrap"><div class="code-block-label">Request Example</div>
         <pre><code class="language-json">{
   "Merchant": "01",
-  "ReceiptType": 1,}</code></pre></div>
+  "ReceiptType": 1
+}</code></pre></div>
       <div class="code-block-wrap">
         <div class="code-tabs">
           <div class="code-tab active" onclick="switchTab(this,'cardstatus-resp')">Approved</div>
@@ -2721,7 +2539,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "querycard",
   "Response": {
-    "Success": "1",
+    "Success": true,
     "ResponseText": "APPROVED",
     "AccountType": "2",
     "Pan": "**** ***** **** 1111",
@@ -2737,7 +2555,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "querycard",
   "Response": {
-    "Success": "0",
+    "Success": false,
     "ResponseText": "Declined",
     "ReceiptType": 1
   }
@@ -2772,7 +2590,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">Merchant</td><td class="field-type">string(2)</td><td><span class="badge badge-o">O</span></td><td>Specify the merchant to execute the transaction. See <a class="doc-table-ref" href="#ref-req-01">Table REQ-01</a>.</td></tr>
           <tr><td class="field-name">SettlementType</td><td class="field-type">string(1)</td><td><span class="badge badge-m">M</span></td><td><code>"E"</code> = Enquiry (Pre), <code>"L"</code> = Last Settlement / Other Date, <code>"C"</code> = Cutover.</td></tr>
           <tr><td class="field-name">SettlementDate</td><td class="field-type">string(12)</td><td><span class="badge badge-o">O</span></td><td>Settlement date for enquiry. Format <code>dd/MM/yyyy</code>. If omitted on enquiry, the terminal uses today's date.</td></tr>
-          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it for settlement.</td></tr>
+          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it for settlement. See <a class="doc-table-ref" href="#accesscode-notes">AccessCode behavior</a>.</td></tr>
           <tr><td class="field-name">WithReceiptImageData</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>If enabled, include <code>ReceiptData</code> and <code>ReceiptLogo</code> in the response.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Receipt format. See <a class="doc-table-ref" href="#ref-req-02">Table REQ-02</a>.</td></tr>
           <tr><td class="field-name">PlainTextCharPerLine</td><td class="field-type">short</td><td><span class="badge badge-o">O</span></td><td>Plain-text receipt width when <code>ReceiptType</code> is plain text.</td></tr>
@@ -2791,7 +2609,6 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">Merchant</td><td class="field-type">number</td><td><span class="badge badge-m">M</span></td><td>Merchant identifier.</td></tr>
           <tr><td class="field-name">ReceiptData</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Settlement receipt content.</td></tr>
           <tr><td class="field-name">ReceiptLogo</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Base64-encoded logo.</td></tr>
-          <tr><td class="field-name">DigitalSig</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Base64-encoded digital signature when returned.</td></tr>
           <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-m">M</span></td><td>Receipt format returned.</td></tr>
         </tbody>
       </table>
@@ -2923,14 +2740,14 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "logon",
   "Response": {
-    "Success": "1"
+    "Success": true
   }
 }</code></pre></div>
         <div class="code-panel" id="logon-resp-1"><pre><code class="language-json">{
   "SessionId": "{{sessionId}}",
   "ResponseType": "logon",
   "Response": {
-    "Success": "0",
+    "Success": false,
     "ResponseText": "LOGON FAILED\nTRANSMISSION ERROR"
   }
 }</code></pre></div>
@@ -3046,9 +2863,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <table class="field-table">
         <thead><tr><th>Property</th><th>Type</th><th>M/O</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td class="field-name">SessionId</td><td class="field-type">string(36)</td><td><span class="badge badge-m">M</span></td><td>SessionId of the transaction being cancelled.</td></tr>
+          <tr><td class="field-name">SessionId</td><td class="field-type">string(36)</td><td><span class="badge badge-m">M</span></td><td>SessionId of the transaction being canceled.</td></tr>
           <tr><td class="field-name">ResponseType</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Always <code>"canceltransaction"</code>.</td></tr>
-          <tr><td class="field-name">Success</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>True = cancelled; false = cancellation declined.</td></tr>
+          <tr><td class="field-name">Success</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>True = canceled; false = cancellation declined.</td></tr>
           <tr><td class="field-name">ResponseText</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Response description.</td></tr>
         </tbody>
       </table>
@@ -3068,7 +2885,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "canceltransaction",
   "Response": {
-    "Success": "1",
+    "Success": true,
     "ResponseText": "Transaction Cancelled"
   }
 }</code></pre></div>
@@ -3076,7 +2893,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "canceltransaction",
   "Response": {
-    "Success": "0",
+    "Success": false,
     "ResponseText": "Cannot Cancel Transaction"
   }
 }</code></pre></div>
@@ -3102,7 +2919,11 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">StatusText</td><td class="field-type">string</td><td><span class="badge badge-m">M</span></td><td>Text of status of transaction. See <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</td></tr>
           <tr><td class="field-name">IsCancelable</td><td class="field-type">bool</td><td><span class="badge badge-o">O</span></td><td>Whether the current async flow can be canceled at this stage.</td></tr>
           <tr><td class="field-name">PrinterStatus</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Printer state text returned by the terminal when available (for example out-of-paper / ready).</td></tr>
-          <tr><td class="field-name">Transaction</td><td class="field-type">object</td><td><span class="badge badge-m">M</span></td><td>Includes the response transactions corresponding to the FuncType on the terminal. This field has a value only when the status of the transaction equals <code>1</code> (<code>TransactionCompleted</code>) — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</td></tr>
+          <tr><td class="field-name">ReceiptType</td><td class="field-type">int</td><td><span class="badge badge-o">O</span></td><td>Format of <code>ReceiptData</code> for an in-progress step that returns receipt or signature data (for example <code>Status = 11</code>). See <a class="doc-table-ref" href="#ref-res-01">Table RES-01</a>.</td></tr>
+          <tr><td class="field-name">ReceiptData</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Receipt content for that in-progress step.</td></tr>
+          <tr><td class="field-name">ReceiptLogo</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Base64-encoded receipt logo for that in-progress step.</td></tr>
+          <tr><td class="field-name">DigitalSig</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Base64-encoded digital signature to confirm with <a class="doc-table-ref" href="#approvesignature">Approve Signature</a>.</td></tr>
+          <tr><td class="field-name">Transaction</td><td class="field-type">object</td><td><span class="badge badge-o">O</span></td><td>Transaction result, with the same fields as <a class="doc-table-ref" href="#transaction-response">Transaction Response</a>. Present only when the transaction has finished (<code>Status = 1</code>, <code>TransactionCompleted</code>); omitted otherwise — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</td></tr>
         </tbody>
       </table>
     </div>
@@ -3127,7 +2948,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     "PrinterStatus": "Printer Ready",
     "Transaction": {
       "TxnType": "P",
-      "Success": "1",
+      "Success": true,
       "lAmount": 2000,
       "lAuthorizedTotal": 2000,
       "szAuthorizationResponseCode": "00",
@@ -3143,8 +2964,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     "Status": 2,
     "StatusText": "Initializing transaction",
     "IsCancelable": true,
-    "PrinterStatus": "",
-    "Transaction": null
+    "PrinterStatus": ""
   }
 }</code></pre></div>
       </div>
@@ -3153,9 +2973,9 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   <!--  OFFLINE TRANSMISSION  -->
   <div class="section-container" id="offlinetransmission">
     <div class="middle-col">
-      <h2 class="section-title">Voucher Entry</h2>
+      <h2 class="section-title">SAF Upload</h2>
       <div class="section-desc">
-        <p>Uploads stored offline (voucher) transactions from the terminal to the host. POSClient labels this <strong>Voucher Entry</strong>. Path is <code>POST .../voucherEntry</code>.</p>
+        <p>Uploads the transactions stored offline on the terminal (Store and Forward, SAF) to the host. Path is <code>POST .../voucherEntry</code>.</p>
       </div>
       <div class="table-label">Request Body Fields</div>
       <table class="field-table">
@@ -3288,14 +3108,14 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">ReportType</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Report grouping. See Accepted Values below.</td></tr>
           <tr><td class="field-name">StartDate</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Start date filter. Format <code>YYYYMMDD</code>.</td></tr>
           <tr><td class="field-name">EndDate</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>End date filter. Format <code>YYYYMMDD</code>.</td></tr>
-          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it for reports.</td></tr>
+          <tr><td class="field-name">AccessCode</td><td class="field-type">string(8)</td><td><span class="badge badge-o">O</span></td><td>Operator access code when the terminal requires it for reports. See <a class="doc-table-ref" href="#accesscode-notes">AccessCode behavior</a>.</td></tr>
         </tbody>
       </table>
       <div class="table-label" style="margin-top:20px;">Accepted Values</div>
       <div class="info-card">
         <ul>
-          <li><strong>PaymentMethod</strong> — <code>None</code>, <code>EftPayment</code>, <code>AliPay</code>, <code>WeChat</code>, <code>Other</code>.</li>
-          <li><strong>TransactionType</strong> — <code>All</code>, <code>Purchase</code>, <code>Refund</code>, <code>PurchaseCash</code>, <code>CashOut</code>, <code>PreAuth</code>, <code>PreAuthComplete</code>. For <code>AliPay</code>/<code>WeChat</code> PaymentMethod the terminal overrides this internally.</li>
+          <li><strong>PaymentMethod</strong> — <code>None</code>, <code>EftPayment</code>, <code>Other</code>.</li>
+          <li><strong>TransactionType</strong> — <code>All</code>, <code>Purchase</code>, <code>Refund</code>, <code>PurchaseCash</code>, <code>CashOut</code>, <code>PreAuth</code>, <code>PreAuthComplete</code>.</li>
           <li><strong>ReportType</strong> — <code>DETAIL</code>, <code>SUMMARY</code>, <code>DATETIME</code>, <code>ISSUER</code>, <code>EMPLOYEE</code>, <code>BYCARDTYPE</code>. <code>NONE</code> is rejected.</li>
         </ul>
       </div>
@@ -3377,6 +3197,15 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
           <tr><td class="field-name">ReceiptLogo</td><td class="field-type">string</td><td><span class="badge badge-o">O</span></td><td>Base64-encoded receipt logo when returned.</td></tr>
         </tbody>
       </table>
+      <div class="info-card" style="margin-top:14px;">
+        <h4>Terminal behavior</h4>
+        <ul>
+          <li>The terminal asks the operator to confirm printing (<em>Do you want to print a transaction listing?</em>, Yes/No). The response is returned after the operator answers.</li>
+          <li>If the operator confirms and the listing is printed, <code>Success</code> is <code>true</code> and <code>ResponseText</code> is <code>"Transaction Successful"</code>.</li>
+          <li>If the operator selects No or cancels, <code>Success</code> is <code>false</code> and <code>ResponseText</code> is <code>"Transaction Cancelled"</code>. If the listing fails, <code>ResponseText</code> carries the error.</li>
+          <li>This request has no <code>AccessCode</code> field. If the operator role requires an access code for Transaction Listing, the terminal prompts the operator to enter it. See <a class="doc-table-ref" href="#accesscode-notes">AccessCode behavior</a>.</li>
+        </ul>
+      </div>
     </div>
     <div class="right-col">
       <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transactionlisting</div></div>
@@ -3390,55 +3219,10 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "ResponseType": "transactionListing",
   "Response": {
     "Success": true,
-    "ResponseText": "APPROVED",
+    "ResponseText": "Transaction Successful",
     "ReceiptData": ""
   }
 }</code></pre></div>
-    </div>
-  </div>
-  <!--  DUMP LOGS  -->
-  <div class="section-container" id="dumplogs">
-    <div class="middle-col">
-      <h2 class="section-title">Dump Logs</h2>
-      <div class="section-desc">
-        <p>Dumps the payment app's log to a text file for debugging. The request uses POST and does not require a request body.</p>
-      </div>
-      <div class="table-label">Response Fields</div>
-      <table class="field-table">
-        <thead><tr><th>Field Name</th><th>Type (Max Length)</th><th>M/O</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td class="field-name">SessionId</td><td class="field-type">string(36)</td><td><span class="badge badge-m">M</span></td><td>SessionId of the request transaction.</td></tr>
-          <tr><td class="field-name">ResponseType</td><td class="field-type">string(23)</td><td><span class="badge badge-m">M</span></td><td>Always <code>"dumplogs"</code>.</td></tr>
-          <tr><td class="field-name">Success</td><td class="field-type">bool</td><td><span class="badge badge-m">M</span></td><td>Whether log dump succeeded (true) or failed (false).</td></tr>
-          <tr><td class="field-name">ResponseText</td><td class="field-type">string(30)</td><td><span class="badge badge-m">M</span></td><td>Response description.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="right-col">
-      <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/dumplogs</div></div>
-      <div class="code-block-wrap"><div class="code-block-label">No request body required</div></div>
-      <div class="code-block-wrap">
-        <div class="code-tabs">
-          <div class="code-tab active" onclick="switchTab(this,'dump-resp')">Success</div>
-          <div class="code-tab" onclick="switchTab(this,'dump-resp')">Failed</div>
-        </div>
-        <div class="code-panel active" id="dump-resp-0"><pre><code class="language-json">{
-  "SessionId": "{{sessionId}}",
-  "ResponseType": "dumplogs",
-  "Response": {
-    "Success": true,
-    "ResponseText": "Logs Dumped Successfully"
-  }
-}</code></pre></div>
-        <div class="code-panel" id="dump-resp-1"><pre><code class="language-json">{
-  "SessionId": "{{sessionId}}",
-  "ResponseType": "dumplogs",
-  "Response": {
-    "Success": false,
-    "ResponseText": "Logs Dump Failed"
-  }
-}</code></pre></div>
-      </div>
     </div>
   </div>
   <!--  APPROVE SIGNATURE  -->
@@ -3446,7 +3230,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
     <div class="middle-col">
       <h2 class="section-title">Approve Signature</h2>
       <div class="section-desc">
-        <p>This function enables customers to approve signature-required transactions through the client app, provided that <code>AsyncMode</code> is enabled. Call this endpoint when <code>querytransaction</code> returns <code>Status = 11</code> (<code>WaitingForSignatureConfirmationFromClient</code>) with a <code>DigitalSig</code> field — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</p>
+        <p>This function lets the POS client submit the merchant's approve/reject decision for signature-required transactions, provided that <code>AsyncMode</code> is enabled. Call this endpoint when <code>querytransaction</code> returns <code>Status = 11</code> (<code>WaitingForSignatureConfirmationFromClient</code>) with a <code>DigitalSig</code> field — see <a class="doc-table-ref" href="#ref-enum-12">Table ENUM-12</a>.</p>
         <p><strong>Flow:</strong> POS submits transaction (AsyncMode enabled) → polls querytransaction → when Status=11 and DigitalSig present, call approvesignature (same sessionId) with Approval approve/reject → continue polling until Status=1.</p>
       </div>
       <div class="table-label">Request Body Fields</div>
@@ -3471,7 +3255,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
       <div class="url-block"><div class="url-block-label">Endpoint</div><div class="endpoint-url"><span class="http-method">POST</span> https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/approvesignature</div></div>
       <div class="code-block-wrap"><div class="code-block-label">Request Example</div>
         <pre><code class="language-json">{
-  "Approval": "1"
+  "Approval": true
 }</code></pre></div>
       <div class="code-block-wrap">
         <div class="code-tabs">
@@ -3482,7 +3266,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "approvesignature",
   "Response": {
-    "Success": "1",
+    "Success": true,
     "ResponseText": "Update Successfully"
   }
 }</code></pre></div>
@@ -3490,7 +3274,7 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
   "SessionId": "{{sessionId}}",
   "ResponseType": "approvesignature",
   "Response": {
-    "Success": "0",
+    "Success": false,
     "ResponseText": "Update Failed"
   }
 }</code></pre></div>
@@ -3514,10 +3298,10 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
         </tbody>
       </table>
       <div class="section-desc" style="margin-top:14px;">
-        <p>The <code>device-mode</code> query parameter is optional and applies to all API endpoints that end with <code>/transaction</code>. If you don't include it in the request URL, the system assumes <code>device-mode=off</code> by default, meaning the client and the device are running on separate devices.</p>
+        <p>The <code>device-mode</code> query parameter is optional and applies to all API endpoints that end with <code>/transaction</code>. If you don't include it in the request URL, the system assumes <code>device-mode=off</code> by default, meaning the client and the payment app are running on separate devices.</p>
       </div>
-      <div class="table-label" style="margin-top:20px;">Device-mode api request</div>
-      <p class="section-desc" style="margin-top:0;">Devices-mode request looks like this.</p>
+      <div class="table-label" style="margin-top:20px;">Device-mode API request</div>
+      <p class="section-desc" style="margin-top:0;">A device-mode request looks like this.</p>
       <div class="url-block" style="margin-top:12px;">
         <div class="endpoint-url">https://<span class="url-var">{{pos-server}}</span>:<span class="url-var">{{pos-port}}</span>/v1/sessions/<span class="url-var">{{sessionId}}</span>/transaction?device-mode=on</div>
       </div>
@@ -3589,36 +3373,17 @@ pre.hljs { border-radius: 6px; font-size: 11.5px; padding: 12px 14px; overflow-x
 
       <div class="timeline">
 
-        
         <div class="timeline-item">
           <div class="timeline-dot latest"></div>
           <div class="timeline-header">
-            <span class="timeline-version">QA_1.3.19</span>
-            <span class="timeline-date">2026/07/31</span>
-            <span class="timeline-author">by Lien Le</span>
+            <span class="timeline-version">QA_1.3.26</span>
+            <span class="timeline-date">2026/10/20</span>
+            <span class="timeline-author">by GiaHuy</span>
           </div>
           <div class="timeline-notes">
-            <span class="cl-badge new"><span class="cl-badge-type">NEW</span>Void (<code>TxnType: "V"</code>) and Shift Actions (<code>/shiftactions</code>)</span>
-            <span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>SettlementType last enquiry <code>"R"</code> → <code>"L"</code>; document <code>SettlementDate</code></span>
-            <span class="cl-badge new"><span class="cl-badge-type">NEW</span>PreEMVFee request/response fields for POS Integration (<code>EnablePreEMVFee</code>, fee flags/amounts, <code>lPreEMVPurchaseFee</code>, <code>lPreEMVCashOutFee</code>)</span>
-            <span class="cl-badge changed"><span class="cl-badge-type">CHANGED</span>Cash Out (<code>TxnType: "C"</code>) request amount field from <code>Amount</code> to <code>AmtCash</code></span>
+            <span class="cl-badge new"><span class="cl-badge-type">NEW</span>Initial release of the POS Integration API specification for the WPAY payment terminal</span>
           </div>
         </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-header">
-            <span class="timeline-version">QA_1.3.18</span>
-            <span class="timeline-date">2026/07/22</span>
-            <span class="timeline-author">by Lien Le</span>
-          </div>
-          <div class="timeline-notes">
-            <span class="cl-badge new"><span class="cl-badge-type">NEW</span>API v1.3.18 developer doc for WPAY</span>
-          </div>
-        </div>
-
-
-      
 
       </div><!-- end timeline -->
     </div><!-- end changelog-section -->
